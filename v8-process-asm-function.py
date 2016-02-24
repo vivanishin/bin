@@ -5,12 +5,26 @@
 
 import sys
 
+if len(sys.argv) < 2:
+    print "Please provide an input file (containing asm obtained with d8 --print-code)."
+    exit()
+
+input_filename = sys.argv[1]
 
 buffer = ""
-for line in sys.stdin:
+start_address = ""
+for line in open(input_filename):
     split = line.split()
     # ignore comment
     if len(split) < 1 or split[0][0] == ';':
         continue
     buffer += split[2]
-print buffer
+    if not start_address:
+        start_address = split[0]
+
+out_file_name = input_filename + "-" + start_address + ".hex"
+hex_file = open(out_file_name, "w")
+print >> hex_file, buffer
+hex_file.close()
+
+print out_file_name
