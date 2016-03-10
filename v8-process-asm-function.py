@@ -22,7 +22,7 @@ for line in open(input_filename):
     if not start_address:
         start_address = split[0]
 
-out_file_name = input_filename + "-" + start_address + ".hex"
+out_file_name = input_filename + ".hex"
 hex_file = open(out_file_name, "w")
 print >> hex_file, buffer
 hex_file.close()
