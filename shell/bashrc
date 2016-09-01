@@ -1,6 +1,5 @@
 # .bashrc
 
-. /home/ivladak/inst/z/z.sh
 
 # == TODO: refactor the functions into standalone scripts. ==
 weather()
@@ -17,7 +16,7 @@ killexcept()
   # We cannot use a pipe here, because disowning won't work since some context
   # will not be the same inside the pipe. So we use a temp file.
   jobs | awk -F '[\]\[]' '{ print $2 }' > $tmpfile 2> /dev/null
-  while read jobnum jobpid
+  while read jobnum
   do
     case "$except" in
         *" $jobnum "* )
@@ -136,6 +135,10 @@ run_on_prompt_command()
 
 PROMPT_COMMAND="run_on_prompt_command"
 export HISTTIMEFORMAT="%F %T  "
+
+# This should go after other modifications of PROMPT_COMMAND (or these other
+# modifications should append rather that rewrite the variable).
+. /home/ivladak/inst/z/z.sh
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
