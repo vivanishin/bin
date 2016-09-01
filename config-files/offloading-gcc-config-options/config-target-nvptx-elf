@@ -1,0 +1,1 @@
+--prefix=${HOME}/ivladak/nvptx-elf/local --target=nvptx-unknown-elf --enable-as-accelerator-for=x86_64-pc-linux-gnu --disable-sjlj-exceptions --enable-newlib-io-long-long
