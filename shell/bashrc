@@ -150,13 +150,22 @@ export LSCOLORS="ExGxcxdxCxegedabagacad"
 export CLICOLOR=YES
 
 export LD_LIBRARY_PATH=$HOME/local/lib64
-cd /home/ivladak/bench/specaccel
+cd /home/ivladak/bench/specaccel 2>/dev/null
 . /home/ivladak/bench/specaccel/shrc
-cd -
+cd - >/dev/null
 
-export PATH=/opt/cuda-7.0.18RC/bin:$PATH
-export PATH=$PATH:/home/ivladak/S/shell
-export PATH=$PATH:/home/ivladak/inst/git-browse/bin
+set -o pipefail
+for path in /opt/cuda-7.0.18RC/bin \
+            /home/ivladak/S/shell \
+            /home/ivladak/inst/git-browse/bin
+do
+  echo $PATH | grep "$path" > /dev/null 2>&1 # Note `set -o pipefail' above.
+  if [ $? -ne 0 ] && [ -d $path ] && [ ! -w "$path" ]; then
+    PATH=$path:$PATH
+  fi
+done
+export PATH
+
 export TT=/home/ivladak/trunk-build/gcc-gomp-host/x86_64-pc-linux-gnu/libgomp/testsuite
 export BB=/home/ivladak/build/gcc-gomp-host/x86_64-pc-linux-gnu/libgomp/testsuite
 
