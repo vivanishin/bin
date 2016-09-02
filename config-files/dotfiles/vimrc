@@ -1,0 +1,37 @@
+"set smartindent
+"let TABWIDTH=8
+"let &tabstop=TABWIDTH
+""let &softtabstop=2
+""let &shiftwidth=2
+"set softtabstop=2
+"set shiftwidth=2
+"let &shiftwidth=TABWIDTH
+set expandtab
+set background=dark
+:map <leader>gf :e <cfile><cr>
+set paste
+set ruler
+set tags=tags;
+set splitright
+" This only tracks changes done using vim.
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
+" Reload vimrc.
+nmap  <leader>rc :so $MYVIMRC<CR>
+" <Ctrl-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <C-l> :nohl<CR><C-l>
+" Remove spaces before newlines.
+nmap <leader>rs :%s/\s\+$//<CR>
+" Go to prev/next buffer.
+nnoremap <silent> '] :bnext<CR>
+nnoremap <silent> ]' :bprev<CR>
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+" GNU Coding Standards
+set cindent
+set cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
+set shiftwidth=2
+set softtabstop=2
+set textwidth=79
+set fo-=ro fo+=cql
