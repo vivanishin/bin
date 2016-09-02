@@ -95,11 +95,14 @@ gsh()
   git show ${@-HEAD}
 }
 
-# Print names of all the functions in the C source file given it follows
-# the GNU coding style conventions.
+# Print names of all the functions and defined macros in the C source file
+# given it follows the GNU coding style conventions.
 outline()
 {
-    sed -n '/^\([a-zA-Z0-9_:]\{1,\}\) (/p' $1  | awk '{ print $1 }' | sort -u
+  sed -n '/^\([a-zA-Z0-9_:]\{1,\}\) (/p' $@  | awk '{ print $1 }' | sort -u
+  echo "--"
+  sed -n '/^[[:space:]]\{0,\}#define[[:space:]]\{0,\}\([a-zA-Z0-9_:]\{1,\}\)(/p' $@ \
+    | awk -F'[( \t]' '{ print $2 }' | sort -u
 }
 
 # See http://eli.thegreenplace.net/2013/06/11/keeping-persistent-history-in-bash
