@@ -52,7 +52,7 @@ dounset()
 
 strace_wrapper()
 {
-  strace -f -e trace=execve,vfork,open,read,write -s 1024 "$@" 2>/tmp/strace
+  strace -yy -f -e trace=execve,vfork,open,read,write,lseek -s 1024 "$@" 2>/tmp/strace
 }
 
 showfind()
