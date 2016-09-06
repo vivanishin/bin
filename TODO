@@ -1,4 +1,4 @@
-* Add ml-grep (and add the auto-download function)
+* ml-grep: add the auto-download function
 * rcre should be able to reload bashrc for all tmux sessions
 * Either separate scripts or at least functions in separate files like in http://unix.stackexchange.com/a/282331/128174
 * Also ask git (the cron job) for patches (staged and unstaged) and save each to a separate file wip-date-[un]staged.diff
