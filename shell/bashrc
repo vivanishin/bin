@@ -136,6 +136,20 @@ run_on_prompt_command()
     log_bash_persistent_history
 }
 
+path_remove_dups()
+{
+  echo $1 | awk -F: '
+  {
+    result = ""
+    for (i = 1; i <= NF; i++)
+      if (!seen[$i]) {
+        seen[$i] = 1
+        result = result ":" $i
+      }
+    print result
+  } ' | sed -e 's|:\{0,\}\(.*\):\{0,\}|\1|'
+}
+
 PROMPT_COMMAND="run_on_prompt_command"
 export HISTTIMEFORMAT="%F %T  "
 
@@ -147,6 +161,9 @@ export HISTTIMEFORMAT="%F %T  "
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
+
+export PATH=$(path_remove_dups $PATH)
+
 # User specific aliases and functions
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
