@@ -4,3 +4,4 @@
 * Also ask git (the cron job) for patches (staged and unstaged) and save each to a separate file wip-date-[un]staged.diff
 * Cron job for daily todo diff
 * Add Kindle highlights downloading and parsing to this repository
+* Move vk_saver to this repository

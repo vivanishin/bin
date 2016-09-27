@@ -5,7 +5,7 @@ exec 2>>$logfile
 exec 1>>$logfile
 date_begin=$(date)
 
-echo "=========== $date_begin BEGIN ==========="
+echo "            $date_begin BEGIN            "
 echo
 
 cd /home/vlad/gcc-gomp
@@ -15,4 +15,4 @@ saved=$?
 [ $saved -eq 0 ] || echo "Error code $saved"
 
 echo
-echo "============ $date_begin END ($(date)) ============"
+echo "             $date_begin END ($(date))             "
