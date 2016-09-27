@@ -4,3 +4,5 @@
 * Also ask git (the cron job) for patches (staged and unstaged) and save each to a separate file wip-date-[un]staged.diff
 * Add Kindle highlights downloading and parsing to this repository
 * Move vk_saver to this repository
+* crontab and anacrontab should be copied here as well
+* Script for automatically updating the dot-files and scripts from different places in the system(s).
