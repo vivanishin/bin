@@ -34,4 +34,4 @@ diff_file="$wd/$last_modification_date-todo.diff"
 cp "$todo_cur" "$todo_old"
 cp "$todo_upstream" "$todo_cur"
 
-diff "$todo_cur" "$todo_old" > "$diff_file"
+diff -u "$todo_old" "$todo_cur" > "$diff_file"
