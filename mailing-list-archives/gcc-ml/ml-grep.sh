@@ -9,7 +9,7 @@ then
   exit 1
 fi
 
-for i in gcc.gnu.org/ml/gcc/*/index.html
+for i in gcc.gnu.org/ml/gcc*/*/index.html
 do
   echo $i | grep -v "current" > /dev/null 2>&1 || continue
   awk -v name="$1" -v topic="$2" -f getsubj.awk $i
