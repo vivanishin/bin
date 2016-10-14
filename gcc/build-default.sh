@@ -127,8 +127,6 @@ incompat "target_only" "host_only"
 if [ ! "x$configure" = "xyes" ]; then
   incompat "rebuild" "make_only"
 fi
-      # TODO: not implemented for host
-incompat "host_only" "configure"
 
 # Make a symlink so GCC builds newlib automaically. For targets which need newlib.
 if echo $target | grep "nvptx" 2>/dev/null 1>&2; then
@@ -170,6 +168,7 @@ then
   fi
 
   if [ ! "x$configure" == "xyes" ]; then
+    make STAGE1_CXXFLAGS="-g3 -O0" all-stage1 -j20 || error "make all-stage-1 failed"
     make -j20 || error "target make failed"
   fi
 
@@ -180,12 +179,22 @@ fi
 if [ ! "x$target_only" = "xyes" ]
 then
   [ "x$rebuild" = "xyes" ] && rm -r $BLD_DIR_HOST
-  # Build host GCC: &&
-  [ ! "x$make_only" = "xyes" ] && (mkdir -p $BLD_DIR_HOST || error "mkdir2 failed")
-  cd $BLD_DIR_HOST || error "cannot cd2"
-  [ ! "x$make_only" = "xyes" ] &&  (rm $SRC_DIR/newlib || error "cannot rm2")
-  [ ! "x$make_only" = "xyes" ] && ($SRC_DIR/configure $HOST_CONFIG_OPTS || error "host configure failed")
-  make -j20 || error "host make failed"
+
+  if [ ! "x$make_only" = "xyes" ] || [ "x$configure" == "xyes" ]; then
+    mkdir -p $BLD_DIR_HOST || error "mkdir failed"
+  fi
+
+  cd $BLD_DIR_HOST || error "cannot cd"
+
+  if [ ! "x$make_only" = "xyes" ] || [ "x$configure" == "xyes" ]; then
+    $SRC_DIR/configure $HOST_CONFIG_OPTS || error "host configure failed"
+  fi
+
+  if [ ! "x$configure" == "xyes" ]; then
+    make STAGE1_CXXFLAGS="-g3 -O0" all-stage1 -j20 || error "make all-stage-1 failed"
+    make -j20 || error "host make failed"
+  fi
+
   [ ! "x$make_only" = "xyes" ] && (make install || error "host make install failed")
 fi
 

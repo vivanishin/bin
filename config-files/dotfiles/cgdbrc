@@ -1,0 +1,2 @@
+map <Insert> i
+:set arrowstyle=short
