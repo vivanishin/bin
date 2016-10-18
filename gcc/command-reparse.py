@@ -4,9 +4,9 @@ import sys
 
 while True:
     try:
-        print raw_input("Command w/garbage-> ").translate(None, '",][()\'')
+        print raw_input().translate(None, '",][()\'')
     except EOFError:
-        print "Bye."
-        exit()
+        sys.exit()
     except Exception as e:
         print e
+	sys.exit(1)
