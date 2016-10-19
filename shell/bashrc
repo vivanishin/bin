@@ -38,7 +38,7 @@ doautoconf()
   for subdir in "" "gcc" "libgomp" "libgfortran" "libiberty" "lto-plugin"
   do
     cd "/home/ivladak/src/gcc-gomp/$subdir" || echo "doautoconf: FAILed to cd" >&2
-    $bindir/autoconf && $bindir/autoheader || echo "doautoconf: FAIL" >&2
+    $bindir/autoconf || echo "doautoconf: FAIL" >&2
   done
   cd "$old"
 }
@@ -179,7 +179,8 @@ cd - >/dev/null
 
 for path in /opt/cuda-7.0.18RC/bin \
             /home/ivladak/S/shell \
-            /home/ivladak/inst/git-browse/bin
+            /home/ivladak/inst/git-browse/bin \
+            /home/ivladak/inst/bin
 do
   if [ -d $path ] && [ ! -w "$path" ] \
      && (! echo $PATH | egrep "($path:|$path/:|$path$)" > /dev/null 2>&1)
@@ -299,6 +300,7 @@ alias ga='gdb --args'
 alias phgrep='cat ~/.persistent_history|grep --color'
 alias hgrep='history|grep --color'
 alias crontab='crontab -i' # TODO: Mac OS does't support the -i flag on crontab, unfortunately.
+alias cgdb='LD_LIBRARY_PATH=/home/ivladak/inst/lib:/usr/lib64 cgdb'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

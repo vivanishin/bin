@@ -6,3 +6,4 @@
 * Add Kindle highlights downloading and parsing to this repository
 * Move vk_saver to this repository
 * Script for automatically updating the dot-files and scripts from different places in the system(s) (run as an anacron job).
+* Reread how to apply a license to the code and GPL the code in this repo.
