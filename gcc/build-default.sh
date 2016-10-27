@@ -20,9 +20,11 @@ usage_and_exit()
 	Usage: ./build-default.sh [options]
 	Available options:
 		actions:
-		    -m, --make-only   only make (don't configure and don't install)
-		    -c, --configure   only configure
-		    -r, --rebuild     wipe the build directory and start anew
+		    -m, --make-only     only make (don't configure and don't install)
+		    -c, --configure     only configure
+		    -r, --rebuild       wipe the build directory and start anew
+		    -i, --install       do the 'make install' step
+		    -mi, --make-install make -j20 && make install
 		modifiers:
 		    -t, --target      only do the actions for target (skip host)
 		    -h, --host        only do the actions for host (skip target)
@@ -66,6 +68,13 @@ do
       ;;
     -m | -make-only | --make-only )
       make_only="yes"
+      ;;
+    -mi | -make-install | --make-install )
+      make_only="yes"
+      install="yes"
+      ;;
+    -i | -install | --install )
+      install="yes"
       ;;
     -c | -configure | --configure )
       configure="yes"
@@ -157,13 +166,13 @@ if [ ! "x$host_only" = "xyes" ]
 then
   [ "x$rebuild" = "xyes" ] && rm -r $BLD_DIR_TARGET
 
-  if [ ! "x$make_only" = "xyes" ] || [ "x$configure" == "xyes" ]; then
+  if [ ! "x$make_only" = "xyes" ] && [ ! "x$install" = "xyes" ] || [ "x$configure" == "xyes" ]; then
     mkdir -p $BLD_DIR_TARGET || error "mkdir failed"
   fi
 
   cd $BLD_DIR_TARGET || error "cannot cd"
 
-  if [ ! "x$make_only" = "xyes" ] || [ "x$configure" == "xyes" ]; then
+  if [ ! "x$make_only" = "xyes" ] && [ ! "x$install" = "xyes" ]  || [ "x$configure" == "xyes" ]; then
     $SRC_DIR/configure $TARGET_CONFIG_OPTS || error "target configure failed"
   fi
 
@@ -172,21 +181,29 @@ then
     make -j20 || error "target make failed"
   fi
 
-  [ ! "x$make_only" = "xyes" ] && (make install || error "target make install failed")
+  if [ ! "x$make_only" = "xyes" ] || [ "x$install" = "xyes" ]; then
+    make install || error "target make install failed"
+  fi
 fi
 
+
+# best approach: for each action have an explicit list of, well, actions
+# in terms of rm, mkdir, configure, make and make install. And then just
+# expand this list to actual actions end execute.
+# and of course, remove this hideous code duplication (should be easier)
+# Use eval, Luke!
 
 if [ ! "x$target_only" = "xyes" ]
 then
   [ "x$rebuild" = "xyes" ] && rm -r $BLD_DIR_HOST
 
-  if [ ! "x$make_only" = "xyes" ] || [ "x$configure" == "xyes" ]; then
+  if [ ! "x$make_only" = "xyes" ] && [ ! "x$install" = "xyes" ]  || [ "x$configure" == "xyes" ]; then
     mkdir -p $BLD_DIR_HOST || error "mkdir failed"
   fi
 
   cd $BLD_DIR_HOST || error "cannot cd"
 
-  if [ ! "x$make_only" = "xyes" ] || [ "x$configure" == "xyes" ]; then
+  if [ ! "x$make_only" = "xyes" ]  && [ ! "x$install" = "xyes" ] || [ "x$configure" == "xyes" ]; then
     $SRC_DIR/configure $HOST_CONFIG_OPTS || error "host configure failed"
   fi
 
@@ -195,7 +212,9 @@ then
     make -j20 || error "host make failed"
   fi
 
-  [ ! "x$make_only" = "xyes" ] && (make install || error "host make install failed")
+  if [ ! "x$make_only" = "xyes" ] || [ "x$install" = "xyes" ]; then
+    make install || error "host make install failed"
+  fi
 fi
 
 export COMPUTE_PROFILE=1

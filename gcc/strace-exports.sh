@@ -7,4 +7,9 @@
 
 helper=$(which helper-strace-exports.py) || helper=./helper-strace-exports.py
 
-$helper "${1--}" | sed -e 's;"\?\([A-Z_][A-Z_0-9]\{0,\}=\)\(.*\)$;export \1"\2";g' | grep export | egrep "(GCC|LIB|WRAP|COMPILER|COLLECT)" | grep -v SPECPERLLIB
+$helper "${1--}" |
+  sed -e 's;"\?\([A-Z_][A-Z_0-9]\{0,\}=\)\(.*\)$;export \1"\2";g' |
+    grep export |
+      egrep "(GCC|LIB|WRAP|COMPILER|COLLECT)" |
+	grep -v SPECPERLLIB |
+	  sed -e 's;\([^"]*\"[^"]*\"\).*$;\1;g' # VAR="val" stuff -- remove stuff

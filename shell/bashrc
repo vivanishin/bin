@@ -45,8 +45,11 @@ doautoconf()
 
 dounset()
 {
-  unset COMPILER_PATH
   unset LIBRARY_PATH
+  unset COLLECT_GCC
+  unset COLLECT_LTO_WRAPPER
+  unset OFFLOAD_TARGET_NAMES
+  unset COMPILER_PATH
   unset COLLECT_GCC_OPTIONS
 }
 
@@ -73,7 +76,7 @@ showfind()
         shift
     done
 #    f_cmd='find . -name "*.[chCH]" -o -name "*.def" -o -name "*.in" -o -name "*.ac" -o -iname "*Make*" | '
-    f_cmd="find . -type f -a -not -name '.*' -a -not -name 'cscope.out' -a -not -name 'ccglue.out*' \
+    f_cmd="find . -type f -a -not -name '.*' -a -not -name 'cscope.out' -a -not -name 'tags' -a -not -name 'ccglue.out*' \
            -a -not -path './.git/*' -a -not -path '*/autom4te.cache/*' \
            -a -not -name 'configure' -a -not -name 'ChangeLog*' | "
     [ ! "x$f_grep_filenames" = "xyes" ] && f_cmd="$f_cmd xargs "
@@ -159,7 +162,7 @@ export HISTTIMEFORMAT="%F %T  "
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+       . /etc/bashrc
 fi
 
 export PATH=$(path_remove_dups $PATH)
@@ -172,7 +175,7 @@ export EDITOR=vim
 export LSCOLORS="ExGxcxdxCxegedabagacad"
 export CLICOLOR=YES
 
-export LD_LIBRARY_PATH=$HOME/local/lib64
+export LD_LIBRARY_PATH=/home/ivladak/inst/lib:/usr/lib64:$HOME/local/lib64
 cd /home/ivladak/bench/specaccel 2>/dev/null
 . /home/ivladak/bench/specaccel/shrc
 cd - >/dev/null
@@ -280,6 +283,7 @@ alias l='ls -CF'
 alias L='less'
 
 alias j='jobs'
+alias v='vim'
 
 alias ta='tmux a -t'
 alias td='tmux detach'
@@ -296,11 +300,14 @@ alias rc="$EDITOR ~/.bashrc"
 alias rcre=". ~/.bashrc"
 
 alias ga='gdb --args'
+alias oh='objdump -h'
+alias trns="tr '\n' ' ' && echo"
+alias trsn="tr ' ' '\n'"
 
 alias phgrep='cat ~/.persistent_history|grep --color'
 alias hgrep='history|grep --color'
 alias crontab='crontab -i' # TODO: Mac OS does't support the -i flag on crontab, unfortunately.
-alias cgdb='LD_LIBRARY_PATH=/home/ivladak/inst/lib:/usr/lib64 cgdb'
+#alias cgdb='LD_LIBRARY_PATH=/home/ivladak/inst/lib:/usr/lib64 cgdb'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
