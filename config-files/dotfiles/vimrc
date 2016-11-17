@@ -6,6 +6,7 @@
 "set softtabstop=2
 "set shiftwidth=2
 "let &shiftwidth=TABWIDTH
+set hlsearch
 set expandtab
 set background=dark
 :map <leader>gf :e <cfile><cr>
