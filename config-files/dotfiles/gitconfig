@@ -3,3 +3,6 @@
 	email = vlad@ispras.ru
 [color]
 	ui = auto
+[alias]
+	checkout = co
+	co = checkout
