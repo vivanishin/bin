@@ -1,5 +1,4 @@
 execute pathogen#infect()
-set hlsearch
 set expandtab
 set background=dark
 :map <leader>gf :e <cfile><cr>
@@ -7,11 +6,20 @@ set paste
 set ruler
 set tags=tags;
 set splitright
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+    syntax on
+    set hlsearch
+endif
+
 " This only tracks changes done using vim.
 augroup reload_vimrc " {
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
+
 " Reload vimrc.
 nmap  <leader>rc :so $MYVIMRC<CR>
 " <Ctrl-l> redraws the screen and removes any search highlighting.

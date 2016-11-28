@@ -7,3 +7,14 @@ set print elements 0
 define ce
   catch syscall exit_group
 end
+
+define dump-tree
+  call debug_tree ($arg0)
+end
+
+document dump-tree
+dd <tree>
+Used for GCC debugging. Dumps textual representation of the tree provided.
+end
+
+alias dd = dump-tree
