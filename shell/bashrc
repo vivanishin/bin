@@ -7,6 +7,12 @@ weather()
     curl "http://wttr.in/${1:-Moscow}"
 }
 
+# Cause gdb to reinitialize tui mode.
+sigwinch()
+{
+  kill -SIGWINCH $(ps -u $(id -u) | grep gdb | awk '{print $1}' | tr '\n' ' ')
+}
+
 # Kill all background processes of this shell except for the given space-separated list.
 killexcept()
 {
@@ -292,6 +298,7 @@ alias tn='tmux new-session -s'
 alias gs='git status'
 alias gl='git log'
 alias gd='git diff'
+alias amend='git commit --amend'
 
 alias cdd='cd `pwd`'
 alias qwer='cd /home/ivladak/src/gcc-gomp'
