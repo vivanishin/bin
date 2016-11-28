@@ -177,8 +177,8 @@ then
   fi
 
   if [ ! "x$configure" == "xyes" ]; then
-    make STAGE1_CXXFLAGS="-g3 -O0" all-stage1 -j20 || error "make all-stage-1 failed"
-    make -j20 || error "target make failed"
+    make STAGE1_CXXFLAGS="-g3 -O0 -fno-inline-functions" all-stage1 -j20 || error "make all-stage-1 failed"
+    make CXXFLAGS="-g3 -O0 -fno-inline-functions" -j20 || error "target make failed"
   fi
 
   if [ ! "x$make_only" = "xyes" ] || [ "x$install" = "xyes" ]; then
@@ -208,8 +208,8 @@ then
   fi
 
   if [ ! "x$configure" == "xyes" ]; then
-    make STAGE1_CXXFLAGS="-g3 -O0" all-stage1 -j20 || error "make all-stage-1 failed"
-    make -j20 || error "host make failed"
+    make STAGE1_CXXFLAGS="-g3 -O0 -fno-inline-functions" all-stage1 -j20 || error "make all-stage-1 failed"
+    make CXXFLAGS="-g3 -O0 -fno-inline-functions" -j20 || error "host make failed"
   fi
 
   if [ ! "x$make_only" = "xyes" ] || [ "x$install" = "xyes" ]; then

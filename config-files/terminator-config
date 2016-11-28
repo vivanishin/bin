@@ -1,0 +1,26 @@
+[global_config]
+[keybindings]
+  next_tab = <Primary><Alt>j
+  close_window = None
+  go_up = <Alt>k
+  prev_tab = <Primary><Alt>k
+  go_down = <Alt>j
+  close_term = None
+  go_right = <Alt>l
+  go_left = <Alt>h
+[profiles]
+  [[default]]
+    scrollback_lines = 16001
+    scroll_on_output = False
+    background_image = None
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
