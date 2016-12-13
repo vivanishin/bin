@@ -1,0 +1,3 @@
+cmap <C-c> <Esc>
+imap <C-c> <Esc>
+noremap <C-c> <Esc>
