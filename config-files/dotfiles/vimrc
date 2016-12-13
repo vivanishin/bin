@@ -6,6 +6,7 @@ set paste
 set ruler
 set tags=tags;
 set splitright
+set matchpairs+=<:>
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -24,6 +25,8 @@ augroup END " }
 nmap  <leader>rc :so $MYVIMRC<CR>
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
+" <C-t> for :tags. Doesn't work especially well.
+nnoremap <silent> <C-t> :tags
 " Remove spaces before newlines.
 nmap <leader>rs :%s/\s\+$//<CR>
 " Replace sequences of 8 spaces with tabs in the entire file.
