@@ -37,6 +37,13 @@ killexcept()
   rm $tmpfile
 }
 
+dotag()
+{
+  ctags -R &
+  cscope -bR &
+  wait
+}
+
 doautoconf()
 {
   local old="$PWD"
@@ -59,9 +66,25 @@ dounset()
   unset COLLECT_GCC_OPTIONS
 }
 
+strace_wrapper_static=0
 strace_wrapper()
 {
-  strace -yy -f -e trace=execve,vfork,open,read,write,lseek -s 1024 "$@" 2>/tmp/strace
+  local options=(-yy -f -s 1024)
+  local trace="-e trace=execve,vfork"
+  (! echo $TRACE_OPTS | grep noenv > /dev/null) && options+=(-v)
+  (echo $TRACE_OPTS | grep full > /dev/null) && trace="$trace,file,read,write"
+
+  options+=($trace)
+  local logname="/tmp/strace-$strace_wrapper_static"
+  options+=(-o "$logname" "$@")
+
+  strace "${options[@]}"
+  local retcode=$?
+
+  strace_wrapper_static=$((strace_wrapper_static + 1))
+  echo "$logname"
+
+  return $retcode
 }
 
 showfind()
@@ -296,9 +319,11 @@ alias td='tmux detach'
 alias tn='tmux new-session -s'
 
 alias gs='git status'
+alias gsn='git status --untracked=no'
 alias gl='git log'
 alias gd='git diff'
 alias amend='git commit --amend'
+alias gds='git diff --staged'
 
 alias cdd='cd `pwd`'
 alias qwer='cd /home/ivladak/src/gcc-gomp'
