@@ -1,3 +1,11 @@
 cmap <C-c> <Esc>
 imap <C-c> <Esc>
 noremap <C-c> <Esc>
+set gui=nonavigation,nobookmarks
+map <C-e> :tabduplicate<CR>
+map <C-l> :nohlsearch<CR>
+imap <C-j> <CR>
+cmap <C-j> <C-m>
+
+" TODO:
+" <C-p> <C-n> in command mode should act like Up and Down are acting now
