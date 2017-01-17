@@ -12,9 +12,11 @@
   go_left = <Alt>h
 [profiles]
   [[default]]
-    scrollback_lines = 16001
-    scroll_on_output = False
     background_image = None
+    scrollback_lines = 16001
+    use_system_font = False
+    scroll_on_output = False
+    font = Inconsolata Medium 12
     scrollback_infinite = True
 [layouts]
   [[default]]
