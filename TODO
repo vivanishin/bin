@@ -8,3 +8,7 @@
 * Script for automatically updating the dot-files and scripts from different places in the system(s) (run as an anacron job).
 * Reread how to apply a license to the code and GPL the code in this repo.
 * bashrc should be in dotfiles, updated w/the same fetch script...
+* gdbinit: dd should work with
+  - cgraph_node* (call node->debug())
+  - rtx (call debug_rtx (expr))
+  - gimple tree (as before)
