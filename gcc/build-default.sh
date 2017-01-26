@@ -1,6 +1,9 @@
 error()
 {
   echo "BUILD ERROR"
+  if [ -n "$2" ]; then
+    printf "$2: "
+  fi
   echo "$1"
   exit 1
 }
@@ -11,6 +14,12 @@ incompat()
   then
     error "Incompatible options: $1 and $2"
   fi
+}
+
+get_other()
+{
+  local sedstr="s/$1//"
+  echo "targethost" | sed -e "$sedstr"
 }
 
 usage_and_exit()
@@ -43,9 +52,9 @@ usage_and_exit()
 #./configure --prefix=$HOME/local &&
 #make -j9 && make install &&
 
-TARGET_CONFIG_OPTS="--prefix=$HOME/local --target=nvptx-none --enable-as-accelerator-for=x86_64-pc-linux-gnu --disable-sjlj-exceptions --enable-newlib-io-long-long"
+target_CONFIG_OPTS="--prefix=$HOME/local --target=nvptx-none --enable-as-accelerator-for=x86_64-pc-linux-gnu --disable-sjlj-exceptions --enable-newlib-io-long-long"
 #--with-build-time-tools=$HOME/local/nvptx-none/bin
-HOST_CONFIG_OPTS="--disable-multilib --enable-languages=c,c++,fortran,lto --prefix=$HOME/local --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --target=x86_64-pc-linux-gnu --enable-offload-targets=nvptx-none --disable-bootstrap"
+host_CONFIG_OPTS="--disable-multilib --enable-languages=c,c++,fortran,lto --prefix=$HOME/local --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --target=x86_64-pc-linux-gnu --enable-offload-targets=nvptx-none --disable-bootstrap"
 
 SRC_DIR="$HOME/src/gcc-gomp"
 BLD_DIR_PREFIX="$HOME/build"
@@ -103,7 +112,7 @@ do
       ;;
     -target-conf-opts | --target-conf-opts )
       if [ -n $2 ]; then
-        TARGET_CONFIG_OPTS=$(cat "$2")
+        target_CONFIG_OPTS=$(cat "$2")
         shift
       else
         echo "--target-conf-opts takes an argument"
@@ -112,7 +121,7 @@ do
       ;;
     -host-conf-opts | --host-conf-opts )
       if [ -n $2 ]; then
-        HOST_CONFIG_OPTS=$(cat "$2")
+        host_CONFIG_OPTS=$(cat "$2")
         shift
       else
         echo "--host-conf-opts takes an argument"
@@ -127,10 +136,10 @@ do
   shift
 done
 
-target=$(echo $TARGET_CONFIG_OPTS | sed -n -e 's/.*target=\([^ ]\+\).*/\1/p')
+target=$(echo $target_CONFIG_OPTS | sed -n -e 's/.*target=\([^ ]\+\).*/\1/p')
 
-BLD_DIR_TARGET="$BLD_DIR_PREFIX/gcc-gomp-$target"
-BLD_DIR_HOST="$BLD_DIR_PREFIX/gcc-gomp-host"
+BLD_DIR_target="$BLD_DIR_PREFIX/gcc-gomp-$target"
+BLD_DIR_host="$BLD_DIR_PREFIX/gcc-gomp-host"
 
 incompat "target_only" "host_only"
 if [ ! "x$configure" = "xyes" ]; then
@@ -138,6 +147,7 @@ if [ ! "x$configure" = "xyes" ]; then
 fi
 
 # Make a symlink so GCC builds newlib automaically. For targets which need newlib.
+# TODO: don't do this for host-only builds
 if echo $target | grep "nvptx" 2>/dev/null 1>&2; then
   LINK=$SRC_DIR/newlib
   if [ -e $LINK ] && [ -h $LINK ]
@@ -155,37 +165,11 @@ fi
 echo $target
 echo $configure
 echo $rebuild
-echo $TARGET_CONFIG_OPTS
+echo $target_CONFIG_OPTS
 
 unset COMPILER_PATH
 unset COLLECT_GCC_OPTIONS
 unset LIBRARY_PATH
-
-# Configure and build accel GCC:
-if [ ! "x$host_only" = "xyes" ]
-then
-  [ "x$rebuild" = "xyes" ] && rm -r $BLD_DIR_TARGET
-
-  if [ ! "x$make_only" = "xyes" ] && [ ! "x$install" = "xyes" ] || [ "x$configure" == "xyes" ]; then
-    mkdir -p $BLD_DIR_TARGET || error "mkdir failed"
-  fi
-
-  cd $BLD_DIR_TARGET || error "cannot cd"
-
-  if [ ! "x$make_only" = "xyes" ] && [ ! "x$install" = "xyes" ]  || [ "x$configure" == "xyes" ]; then
-    $SRC_DIR/configure $TARGET_CONFIG_OPTS || error "target configure failed"
-  fi
-
-  if [ ! "x$configure" == "xyes" ]; then
-    make STAGE1_CXXFLAGS="-g3 -O0 -fno-inline-functions" all-stage1 -j20 || error "make all-stage-1 failed"
-    make CXXFLAGS="-g3 -O0 -fno-inline-functions" -j20 || error "target make failed"
-  fi
-
-  if [ ! "x$make_only" = "xyes" ] || [ "x$install" = "xyes" ]; then
-    make install || error "target make install failed"
-  fi
-fi
-
 
 # best approach: for each action have an explicit list of, well, actions
 # in terms of rm, mkdir, configure, make and make install. And then just
@@ -193,30 +177,38 @@ fi
 # and of course, remove this hideous code duplication (should be easier)
 # Use eval, Luke!
 
-if [ ! "x$target_only" = "xyes" ]
-then
-  [ "x$rebuild" = "xyes" ] && rm -r $BLD_DIR_HOST
-
-  if [ ! "x$make_only" = "xyes" ] && [ ! "x$install" = "xyes" ]  || [ "x$configure" == "xyes" ]; then
-    mkdir -p $BLD_DIR_HOST || error "mkdir failed"
+for targethost in "target" "host"
+do
+  other=$(get_other "$targethost")
+  other_only="$other"_only
+  if [ "x${!other_only}" = "xyes" ]; then
+    continue
   fi
 
-  cd $BLD_DIR_HOST || error "cannot cd"
+  bld_dir_var="BLD_DIR_$targethost"
+  echo "${!bld_dir_var}" >> /tmp/1
+  [ "x$rebuild" = "xyes" ] && rm -r "${!bld_dir_var}"
 
+  if [ ! "x$make_only" = "xyes" ] && [ ! "x$install" = "xyes" ]  || [ "x$configure" == "xyes" ]; then
+    mkdir -p "${!bld_dir_var}" || error "mkdir failed" "$targethost"
+  fi
+
+  cd "${!bld_dir_var}" || error "cannot cd" "$targethost"
+
+  config_opts_var="$targethost"_CONFIG_OPTS
   if [ ! "x$make_only" = "xyes" ]  && [ ! "x$install" = "xyes" ] || [ "x$configure" == "xyes" ]; then
-    $SRC_DIR/configure $HOST_CONFIG_OPTS || error "host configure failed"
+    $SRC_DIR/configure ${!config_opts_var} || error "configure failed" "$targethost"
   fi
 
   if [ ! "x$configure" == "xyes" ]; then
-    make STAGE1_CXXFLAGS="-g3 -O0 -fno-inline-functions" all-stage1 -j20 || error "make all-stage-1 failed"
-    make CXXFLAGS="-g3 -O0 -fno-inline-functions" -j20 || error "host make failed"
+    make STAGE1_CXXFLAGS="-g3 -O0 -fno-inline-functions" all-stage1 -j20 || error "make all-stage-1 failed" "$targethost"
+    make CXXFLAGS="-g3 -O0 -fno-inline-functions" -j20 || error "make failed" "$targethost"
   fi
 
   if [ ! "x$make_only" = "xyes" ] || [ "x$install" = "xyes" ]; then
-    make install || error "host make install failed"
+    make install || error "make install failed" "$targethost"
   fi
-fi
+done
 
 export COMPUTE_PROFILE=1
 CUDA_VISIBLE_DEVICES=-1
-
