@@ -278,6 +278,7 @@ alias L='less'
 
 alias j='jobs'
 alias v='vim'
+alias vi='vim'
 
 alias ta='tmux a -t'
 alias td='tmux detach'
