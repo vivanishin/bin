@@ -38,6 +38,15 @@ setxkbmap -model apple_laptop \
   -option grp:rwin_toggle \
   -option compose:ralt
 
+while true
+do
+  LOCALTIME=$(date +%H:%M)
+  BAT=$(cat /sys/class/power_supply/BAT0/capacity)
+
+  xsetroot -name "$LOCALTIME $BAT%"
+  sleep 20s
+done &
+
 xset r rate 200 50
 firefox&
 st&
