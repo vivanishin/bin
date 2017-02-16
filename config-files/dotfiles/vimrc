@@ -41,6 +41,8 @@ nnoremap <silent> <C-t> :tag |
 nmap <leader>rs :%s/\s\+$//<CR>
 " Replace sequences of 8 spaces with tabs (dosn't work. TODO: write a function)
 nmap <leader>tt <Esc>:'<,'>s;[ ]\{8,8\};\t;g<CR>
+" Toggle spell check.
+map <F6> :set spell!<CR>
 
 " Go to prev/next buffer.
 nnoremap <silent> '] :bnext<CR>
