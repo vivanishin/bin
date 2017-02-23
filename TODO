@@ -14,5 +14,7 @@
   - rtx (call debug_rtx (expr))
   - gimple tree (as before)
 * Use submodules for vim plugins
-* Add my archbook systemd scripts
+* Add archbook files in a structured way (with all the filesystem structure, but with only a few files)
+  - systemd scripts
+  - /etc/fstab
 * Re-structure this TODO (priority items vs. all others)
