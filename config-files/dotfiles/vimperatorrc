@@ -4,8 +4,14 @@ noremap <C-c> <Esc>
 set gui=nonavigation,nobookmarks
 map <C-e> :tabduplicate<CR>
 map <C-l> :nohlsearch<CR>
+" Toggle full screen mode.
+map ff <F11>
 imap <C-j> <CR>
 cmap <C-j> <C-m>
+hi CmdLine -append font-size:16px
+
+" Schemes from https://github.com/vimpr/vimperator-colors.git
+colorscheme solarized_dark
 
 " TODO:
 " <C-p> <C-n> in command mode should act like Up and Down are acting now
