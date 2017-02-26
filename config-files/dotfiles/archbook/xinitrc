@@ -36,7 +36,8 @@ setxkbmap -model apple_laptop \
   -layout us,ru -variant , \
   -option ctrl:nocaps \
   -option grp:rwin_toggle \
-  -option compose:ralt
+  -option compose:ralt \
+  -option grp_led:caps
 
 while true
 do
