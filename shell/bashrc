@@ -212,7 +212,8 @@ cd - >/dev/null
 for path in /opt/cuda-7.0.18RC/bin \
             /home/ivladak/S/shell \
             /home/ivladak/inst/git-browse/bin \
-            /home/ivladak/inst/bin
+            /home/ivladak/inst/bin \
+            /home/vlad/bin
 do
   if [ -d $path ] && [ ! -w "$path" ] \
      && (! echo $PATH | egrep "($path:|$path/:|$path$)" > /dev/null 2>&1)
@@ -290,6 +291,7 @@ alias gl='git log'
 alias gd='git diff'
 alias amend='git commit --amend'
 alias gds='git diff --staged'
+alias gsd='git diff --staged'
 
 alias cdd='cd `pwd`'
 alias qwer='cd /home/ivladak/src/gcc-gomp'
@@ -306,6 +308,8 @@ alias phgrep='cat ~/.persistent_history|grep --color'
 alias hgrep='history|grep --color'
 alias crontab='crontab -i' # TODO: Mac OS does't support the -i flag on crontab, unfortunately.
 #alias cgdb='LD_LIBRARY_PATH=/home/ivladak/inst/lib:/usr/lib64 cgdb'
+
+alias def=sdcv
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
