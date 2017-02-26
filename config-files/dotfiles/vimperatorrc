@@ -5,7 +5,7 @@ set gui=nonavigation,nobookmarks
 map <C-e> :tabduplicate<CR>
 map <C-l> :nohlsearch<CR>
 " Toggle full screen mode.
-map ff <F11>
+map ss <F11>
 imap <C-j> <CR>
 cmap <C-j> <C-m>
 hi CmdLine -append font-size:16px
