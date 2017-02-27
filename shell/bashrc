@@ -306,7 +306,8 @@ alias trsn="tr ' ' '\n'"
 
 alias phgrep='cat ~/.persistent_history|grep --color'
 alias hgrep='history|grep --color'
-alias crontab='crontab -i' # TODO: Mac OS does't support the -i flag on crontab, unfortunately.
+alias crontab='crontab -i'
+alias sshowfind='showfind -s'
 #alias cgdb='LD_LIBRARY_PATH=/home/ivladak/inst/lib:/usr/lib64 cgdb'
 
 alias def=sdcv
