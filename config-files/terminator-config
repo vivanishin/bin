@@ -5,6 +5,7 @@
   next_tab = <Primary><Alt>j
   close_window = None
   go_up = <Alt>k
+  zoom_out = <Primary><Ctrl>underscore
   prev_tab = <Primary><Alt>k
   go_down = <Alt>j
   close_term = None
@@ -17,6 +18,7 @@
     use_system_font = False
     scroll_on_output = False
     font = Inconsolata Medium 12
+    allow_bold = False
     scrollback_infinite = True
 [layouts]
   [[default]]
