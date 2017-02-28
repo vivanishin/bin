@@ -9,6 +9,10 @@ map ss <F11>
 imap <C-j> <CR>
 cmap <C-j> <C-m>
 hi CmdLine -append font-size:16px
+" Add the current page to Instapaper given an executable called instapaper
+" (which does the actual work of adding using http api) is in PATH.
+command! -nargs=0 Instapaper execute "!instapaper " + content.location.href
+map Y :Instapaper<CR><Esc>
 
 " Schemes from https://github.com/vimpr/vimperator-colors.git
 colorscheme solarized_dark
