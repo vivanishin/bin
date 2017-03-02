@@ -8,6 +8,19 @@ set tags=tags;
 set splitright
 set matchpairs+=<:>
 
+let mapleader = "\<Space>"
+" Copy & paste to system clipboard with <Space>p and <Space>y.
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+" Save with <Space>w.
+nnoremap <Leader>w :w<CR>
+" Paste after end of line with <Space>e.
+nnoremap <Leader>e A
+
 " Russian keyboard.
 set keymap=russian-jcukenwin
 set iminsert=0
@@ -39,10 +52,14 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 nnoremap <silent> <C-t> :tag |
 " Remove spaces before newlines.
 nmap <leader>rs :%s/\s\+$//<CR>
-" Replace sequences of 8 spaces with tabs (dosn't work. TODO: write a function)
-nmap <leader>tt <Esc>:'<,'>s;[ ]\{8,8\};\t;g<CR>
 " Toggle spell check.
 map <F6> :set spell!<CR>
+" Replace sequences of 8 spaces with tabs (WIP).
+"  See the help at
+"  :h function-range-example and
+"  :h a:firstline
+nmap <leader>tt  :call SpaceToTab()<CR>
+"<Esc>:'<,'>s;[ ]\{8,8\};\t;g<CR>
 
 " Go to prev/next buffer.
 nnoremap <silent> '] :bnext<CR>
@@ -74,9 +91,27 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERD_use_ada_with_spaces = 1
 
+function! Dotag()
+ :! dotag
+ :cs reset
+endfunction
+
 hi Comment	guifg=#007f7f cterm=none
 hi Constant	cterm=none
 hi Special	cterm=none
 hi Type		cterm=none
 hi Statement	cterm=none
 hi PreProc	cterm=none
+
+" Make Ctrl-P plugin a lot faster for Git projects
+let g:ctrlp_use_caching = 0
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+else
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+  let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+    \ }
+endif
