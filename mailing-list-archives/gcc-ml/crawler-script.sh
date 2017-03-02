@@ -17,5 +17,5 @@ find . $gnu_compat -regex '.*[0-9]\{4,4\}-[0-9]\{2,2\}.*[.]html' |
                     xargs rm
 
 # Download what we don't have.
-wget -r -l 1 --no-clobber https://gcc.gnu.org/ml/gcc/ 2> /dev/null
-wget -r -l 1 --no-clobber https://gcc.gnu.org/ml/gcc-patches/ 2> /dev/null
+wget -r -l 1 --no-clobber https://gcc.gnu.org/ml/gcc/
+wget -r -l 1 --no-clobber https://gcc.gnu.org/ml/gcc-patches/
