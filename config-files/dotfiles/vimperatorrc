@@ -6,6 +6,7 @@ map <C-e> :tabduplicate<CR>
 map <C-l> :nohlsearch<CR>
 " Toggle full screen mode.
 map ss <F11>
+map aa :tabopen about:addons<CR>
 imap <C-j> <CR>
 cmap <C-j> <C-m>
 hi CmdLine -append font-size:16px
