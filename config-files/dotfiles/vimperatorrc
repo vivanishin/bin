@@ -9,6 +9,8 @@ map ss <F11>
 map aa :tabopen about:addons<CR>
 imap <C-j> <CR>
 cmap <C-j> <C-m>
+cmap <C-p> <Up>
+cmap <C-n> <Down>
 hi CmdLine -append font-size:16px
 " Add the current page to Instapaper given an executable called instapaper
 " (which does the actual work of adding using http api) is in PATH.
@@ -17,6 +19,3 @@ map Y :Instapaper<CR><Esc>
 
 " Schemes from https://github.com/vimpr/vimperator-colors.git
 colorscheme solarized_dark
-
-" TODO:
-" <C-p> <C-n> in command mode should act like Up and Down are acting now
