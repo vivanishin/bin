@@ -20,6 +20,14 @@ vmap <Leader>P "+P
 nnoremap <Leader>w :w<CR>
 " Paste after end of line with <Space>e.
 nnoremap <Leader>e A
+nnoremap <Leader>tl :TlistToggle<CR>
+nnoremap <leader>gd :Git diff<CR>
+
+nnoremap <Leader>dt :call Dotag()<CR>
+" Iterate over tabs forward and backward with gt/tg.
+nnoremap tg gT
+nnoremap <Leader>3 #
+nnoremap <Leader>8 *
 
 " Russian keyboard.
 set keymap=russian-jcukenwin
