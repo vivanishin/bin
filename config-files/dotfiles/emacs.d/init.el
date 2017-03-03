@@ -53,7 +53,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 5)
 (setq-default c-basic-offset 2)
-(setq-default c-default-style "linux")
+(setq-default c-default-style "gnu")
 (setq-default comment-multi-line t)
 (setq-default comment-style 'extra-line)
 (c-set-offset 'case-label '+)
