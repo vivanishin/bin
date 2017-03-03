@@ -2,13 +2,37 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
-(require 'evil)
-(evil-mode 1)
+(setq tramp-default-method "ssh")
 
-(require 'ido)
-(ido-mode t)
+;;; ------------------------------------------------------------
+;;; Packages.
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-(require 'dired-x)
+(use-package recentf
+  :ensure t
+  :config
+  (recentf-mode 1)
+  :bind ("C-x f" . recentf-open-files))
+
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1))
+
+(use-package ido
+  :ensure t
+  :config
+  (ido-mode 1))
+
+(use-package dired-x)
+
+(use-package magit
+  :ensure t)
+
+(use-package evil-magit
+  :ensure t)
 
 ;;; ------------------------------------------------------------
 ;;; Giule Scheme debugging.
