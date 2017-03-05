@@ -4,6 +4,8 @@
 
 (setq tramp-default-method "ssh")
 
+(server-start)
+
 ;;; ------------------------------------------------------------
 ;;; Packages.
 (unless (package-installed-p 'use-package)
@@ -32,6 +34,9 @@
   :ensure t)
 
 (use-package evil-magit
+  :ensure t)
+
+(use-package pdf-tools
   :ensure t)
 
 ;;; ------------------------------------------------------------
@@ -115,7 +120,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      ("gnu" . "http://elpa.gnu.org/packages/")
      ("marmalade" . "http://marmalade-repo.org/packages/")
      ("org" . "http://orgmode.org/elpa/"))))
- '(package-selected-packages (quote (evil-magit magit use-package solarized-theme evil)))
+ '(package-selected-packages
+   (quote
+    (pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))
