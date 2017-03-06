@@ -1,3 +1,4 @@
+;; TODO: Help mode, Magit log mode, MagitPopup mode. 
 (defun vi--config-evil ()
   "Configure evil mode."
 

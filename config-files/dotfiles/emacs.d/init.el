@@ -1,6 +1,6 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (package-initialize)
 
 
@@ -51,7 +51,7 @@
 
 ;;; ------------------------------------------------------------
 ;;; Giule Scheme debugging.
-(load "~/.emacs.d/guile-interaction-mode.el")
+(require 'guile-interaction-mode)
 ;(require 'gds)
 
 ;(add-to-list 'load-path "~/.emacs.d/static_packages/")
@@ -102,7 +102,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (when window-system
  (require 'solarized)
  (load-theme 'solarized-dark t) ;wombat; misterioso; wheatgrass
- (add-to-list 'default-frame-alist '(font . "Monoid 10"))
+ (add-to-list 'default-frame-alist '(font . "Inconsolata 10"))
  (setq x-pointer-shape x-pointer-arrow))
 
 ;;; ------------------------------------------------------------

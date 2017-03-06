@@ -96,4 +96,4 @@ first setting the current module."
 
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 
-(provide 'guile-interface)
+(provide 'guile-interaction-mode)
