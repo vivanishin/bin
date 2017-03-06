@@ -1,8 +1,8 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'load-path "~/.emacs.d")
 (package-initialize)
 
-(setq tramp-default-method "ssh")
 
 (server-start)
 
@@ -16,11 +16,22 @@
   :ensure t
   :config
   (recentf-mode 1)
-  :bind ("C-x f" . recentf-open-files))
+  :bind (("C-x f" . recentf-open-files)))
+; TODO: add magit-diff-mode and recentf-mode to evil-motion-state-modes
 
+(require 'init-evil)
 (use-package evil
   :ensure t
+
   :config
+
+  (use-package evil-leader
+    :ensure t
+    :config
+    (global-evil-leader-mode)
+    (vi--config-evil-leader))
+
+  (add-hook 'evil-mode-hook 'vi--config-evil)
   (evil-mode 1))
 
 (use-package ido
@@ -54,6 +65,8 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode nil)
+(setq tramp-default-method "ssh")
+(setq column-number-mode t)
 (setq initial-scratch-message nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 5)
@@ -122,7 +135,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))
