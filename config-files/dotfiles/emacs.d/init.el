@@ -17,7 +17,6 @@
   :config
   (recentf-mode 1)
   :bind (("C-x f" . recentf-open-files)))
-; TODO: add magit-diff-mode and recentf-mode to evil-motion-state-modes
 
 (require 'init-evil)
 (use-package evil
