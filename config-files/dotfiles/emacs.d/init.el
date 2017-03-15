@@ -19,6 +19,10 @@
   :bind (("C-x f" . recentf-open-files)))
 
 (require 'init-evil)
+
+(use-package highlight
+  :ensure t)
+
 (use-package evil
   :ensure t
 
@@ -31,6 +35,12 @@
     (vi--config-evil-leader))
 
   (add-hook 'evil-mode-hook 'vi--config-evil)
+
+  (use-package evil-search-highlight-persist
+    :ensure t
+    :config
+    (global-evil-search-highlight-persist))
+
   (evil-mode 1))
 
 (use-package ido
@@ -44,7 +54,10 @@
   :ensure t)
 
 (use-package evil-magit
-  :ensure t)
+  :ensure t
+  :config
+  (setq evil-magit-state 'normal))
+(require 'evil-magit)
 
 (use-package pdf-tools
   :ensure t)
@@ -64,7 +77,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode nil)
-(setq tramp-default-method "ssh")
+(setq tramp-default-method "scp")
 (setq column-number-mode t)
 (setq initial-scratch-message nil)
 (setq-default indent-tabs-mode nil)
@@ -105,6 +118,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  (add-to-list 'default-frame-alist '(font . "Inconsolata 10"))
  (setq x-pointer-shape x-pointer-arrow))
 
+(set-face-bold-p 'bold nil)
+(blink-cursor-mode -1)
+
 ;;; ------------------------------------------------------------
 ;;; Keep all backup files in one place.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -134,7 +150,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))

@@ -2,17 +2,19 @@
 (defun vi--config-evil ()
   "Configure evil mode."
 
-  ; Use evil-motion as the initial state rather than evil-emacs state.
-  (setq evil-motion-state-modes
-        (append evil-emacs-state-modes evil-motion-state-modes))
-  (setq evil-emacs-state-modes nil)
-
   (delete 'term-mode evil-insert-state-modes)
 
   ;; Use Emacs state in these modes.
   (dolist (mode '(dired-mode
-                  term-mode))
+                  term-mode
+                  flycheck-error-list-mode))
     (add-to-list 'evil-emacs-state-modes mode))
+
+  (delete 'term-mode evil-insert-state-modes)
+
+  ;; Use insert state in these additional modes.
+  (dolist (mode '(magit-log-edit-mode))
+    (add-to-list 'evil-insert-state-modes mode))
 
 
   (evil-add-hjkl-bindings occur-mode-map 'emacs
@@ -32,9 +34,12 @@
   (evil-leader/set-leader "<SPC>")
   (evil-leader/set-key
     "w" 'evil-write
+    "e" 'evil-append-line
     "gs" 'magit-status
     "gl" 'magit-log-all
-    "gd" 'magit-diff))
+    "gd" 'magit-diff
+    "3" 'evil-search-word-backward
+    "8" 'evil-search-word-forward))
 
 
 (provide 'init-evil)
