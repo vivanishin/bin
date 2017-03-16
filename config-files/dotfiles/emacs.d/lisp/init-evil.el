@@ -26,6 +26,8 @@
     (kbd "C-w C-w") 'other-window)
 
   ;; Global bindings.
+  (evil-define-key 'normal global-map (kbd "C-f")  'evil-scroll-down)
+  (evil-define-key 'normal global-map (kbd "C-u")  'evil-scroll-up)
   (evil-define-key 'normal global-map (kbd "z z")  'evil-write)
   (evil-define-key 'normal global-map (kbd "C-t")  'find-tag)
   ; TODO: depending on the minor mode we might want to
