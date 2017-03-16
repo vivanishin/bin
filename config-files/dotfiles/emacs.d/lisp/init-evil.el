@@ -26,7 +26,12 @@
     (kbd "C-w C-w") 'other-window)
 
   ;; Global bindings.
-  (evil-define-key 'normal global-map (kbd "z z")  'evil-write))
+  (evil-define-key 'normal global-map (kbd "z z")  'evil-write)
+  (evil-define-key 'normal global-map (kbd "C-t")  'find-tag)
+  ; TODO: depending on the minor mode we might want to
+  ; xref-find-references instead.
+  (evil-define-key 'normal global-map (kbd "C-g")  'cscope-find-this-symbol)
+  (evil-define-key 'normal global-map (kbd "<f3>") 'xref-find-definitions))
 
 
 (defun vi--config-evil-leader ()
@@ -35,6 +40,7 @@
   (evil-leader/set-key
     "w" 'evil-write
     "e" 'evil-append-line
+    "t" 'find-tag
     "gs" 'magit-status
     "gl" 'magit-log-all
     "gd" 'magit-diff

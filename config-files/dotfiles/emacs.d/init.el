@@ -3,6 +3,17 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (package-initialize)
 
+;;; ------------------------------------------------------------
+;;; Theme
+(when window-system
+ (require 'solarized)
+ (load-theme 'solarized-dark t) ;wombat; misterioso; wheatgrass
+ (add-to-list 'default-frame-alist '(font . "Inconsolata 10"))
+ (setq x-pointer-shape x-pointer-arrow))
+
+(set-face-bold-p 'bold nil)
+(blink-cursor-mode -1)
+
 
 (server-start)
 
@@ -39,7 +50,8 @@
   (use-package evil-search-highlight-persist
     :ensure t
     :config
-    (global-evil-search-highlight-persist))
+    (global-evil-search-highlight-persist)
+    (evil-define-key 'normal global-map (kbd "C-l") 'evil-search-highlight-persist-remove-all))
 
   (evil-mode 1))
 
@@ -61,6 +73,34 @@
 
 (use-package pdf-tools
   :ensure t)
+
+(use-package xcscope
+  :ensure t)
+
+
+;;; ------------------------------------------------------------
+;;; Build with make. https://emacswiki.org/emacs/CompileCommand#toc5
+(require 'cl)
+
+(defun* get-closest-pathname (&optional (file "Makefile"))
+  "Determine the pathname of the first instance of FILE starting from
+the current directory towards root.  This may not do the correct thing
+in presence of links. If it does not find FILE, then it shall return
+the name of FILE in the current directory, suitable for creation"
+  (let ((root (expand-file-name "/")))
+    (expand-file-name file
+                      (loop
+                       for d = default-directory then (expand-file-name ".." d)
+                       if (file-exists-p (expand-file-name file d))
+                       return d
+                       if (equal d root)
+                       return nil))))
+
+(require 'compile)
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (set (make-local-variable 'compile-command)
+                 (format "make -f %s" (get-closest-pathname)))))
 
 ;;; ------------------------------------------------------------
 ;;; Giule Scheme debugging.
@@ -91,6 +131,14 @@
 (c-set-offset 'innamespace 0)
 (c-set-offset 'inline-open 0)
 
+;; Treat underscore as a part of a word in C and C++ modes.
+(require 'cc-mode)
+(modify-syntax-entry ?_ "w" c-mode-syntax-table)
+(modify-syntax-entry ?_ "w" c++-mode-syntax-table)
+
+;; Treat the dash symbol as a part of a word in emacs lisp.
+(modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)
+
 ;;; ------------------------------------------------------------
 ;;; Esc quits (http://stackoverflow.com/a/10166400/2104472)
 (defun minibuffer-keyboard-quit ()
@@ -110,16 +158,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 
-;;; ------------------------------------------------------------
-;;; Theme
-(when window-system
- (require 'solarized)
- (load-theme 'solarized-dark t) ;wombat; misterioso; wheatgrass
- (add-to-list 'default-frame-alist '(font . "Inconsolata 10"))
- (setq x-pointer-shape x-pointer-arrow))
-
-(set-face-bold-p 'bold nil)
-(blink-cursor-mode -1)
 
 ;;; ------------------------------------------------------------
 ;;; Keep all backup files in one place.
@@ -150,7 +188,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))
