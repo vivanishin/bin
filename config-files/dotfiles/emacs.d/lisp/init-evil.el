@@ -1,4 +1,6 @@
 ;; TODO: Help mode, Magit log mode, MagitPopup mode. 
+(require 'vi--helpers)
+
 (defun vi--config-evil ()
   "Configure evil mode."
 
@@ -33,7 +35,8 @@
   ; TODO: depending on the minor mode we might want to
   ; xref-find-references instead.
   (evil-define-key 'normal global-map (kbd "C-g")  'cscope-find-this-symbol)
-  (evil-define-key 'normal global-map (kbd "<f3>") 'xref-find-definitions))
+  (evil-define-key 'normal global-map (kbd "<f3>") 'xref-find-definitions)
+  (evil-define-key 'insert global-map (kbd "C-u")  'backward-kill-line))
 
 
 (defun vi--config-evil-leader ()
