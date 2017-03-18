@@ -14,6 +14,8 @@
 (set-face-bold-p 'bold nil)
 (blink-cursor-mode -1)
 
+(setq-default fill-column 80)
+(global-set-key (kbd "C-c q") 'auto-fill-mode)
 
 (server-start)
 

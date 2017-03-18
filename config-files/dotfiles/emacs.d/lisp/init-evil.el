@@ -44,6 +44,7 @@
   (evil-leader/set-leader "<SPC>")
   (evil-leader/set-key
     "w" 'evil-write
+    "q" 'auto-fill-mode
     "e" 'evil-append-line
     "t" 'find-tag
     "gs" 'magit-status
