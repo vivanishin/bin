@@ -20,6 +20,10 @@
 (server-start)
 
 ;;; ------------------------------------------------------------
+;;; Window management.
+(require 'vi--windows)
+
+;;; ------------------------------------------------------------
 ;;; Packages.
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -191,7 +195,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))
