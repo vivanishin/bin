@@ -69,13 +69,14 @@
 (use-package dired-x)
 
 (use-package magit
+  :config (progn
+            (setq evil-magit-want-horizontal-movement t)
+            (setq git-commit-summary-max-length 50)
+            (use-package evil-magit
+              :ensure t
+              :config
+              (setq evil-magit-state 'normal)))
   :ensure t)
-
-(use-package evil-magit
-  :ensure t
-  :config
-  (setq evil-magit-state 'normal))
-(require 'evil-magit)
 
 (use-package pdf-tools
   :ensure t)
