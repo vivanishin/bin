@@ -18,7 +18,9 @@ command! -nargs=0 Instapaper execute "!instapaper " + content.location.href
 map Y :Instapaper<CR><Esc>
 
 imap <C-p> <Esc>:tabprevious<CR>
+map <C-p> <Esc>:tabprevious<CR>
 imap <C-n> <Esc>:tabnext<CR>
+imap <C-o> <Esc>:back<CR>
 
 " Schemes from https://github.com/vimpr/vimperator-colors.git
 colorscheme solarized_dark
