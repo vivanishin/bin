@@ -40,8 +40,12 @@ killexcept()
 dotag()
 {
   ctags -R &
+  pid1=$!
+  ctags -Re &
+  pid2=$!
   cscope -bR &
-  wait
+  pid3=$!
+  wait $pid1 $pid2 $pid3
 }
 
 doautoconf()
