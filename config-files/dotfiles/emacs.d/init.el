@@ -14,8 +14,13 @@
 (set-face-bold-p 'bold nil)
 (blink-cursor-mode -1)
 
+;; Vim-like scrolling.
+(setq scroll-step 1)
+(setq scroll-margin 1)
+(setq scroll-conservatively 9999) ; Never recenter point.
+
 (setq-default fill-column 80)
-(global-set-key (kbd "C-c q") 'auto-fill-mode)
+(auto-fill-mode)
 
 (server-start)
 
@@ -146,24 +151,10 @@ the name of FILE in the current directory, suitable for creation"
 ;; Treat the dash symbol as a part of a word in emacs lisp.
 (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)
 
+
 ;;; ------------------------------------------------------------
-;;; Esc quits (http://stackoverflow.com/a/10166400/2104472)
-(defun minibuffer-keyboard-quit ()
-  "Abort recursive edit.
-In Delete Selection mode, if the mark is active, just deactivate it;
-then it takes a second \\[keyboard-quit] to abort the minibuffer."
-  (interactive)
-  (if (and delete-selection-mode transient-mark-mode mark-active)
-      (setq deactivate-mark  t)
-    (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-    (abort-recursive-edit)))
-(define-key evil-normal-state-map [escape] 'keyboard-quit)
-(define-key evil-visual-state-map [escape] 'keyboard-quit)
-(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
-(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+;;; The rest of my key mappings. Makes sense to put it after all package loads.
+(require 'vi--global-bindings)
 
 
 ;;; ------------------------------------------------------------
