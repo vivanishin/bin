@@ -40,6 +40,10 @@
   (recentf-mode 1)
   :bind (("C-x f" . recentf-open-files)))
 
+(use-package image+
+  :ensure t)
+
+
 (require 'init-evil)
 
 (use-package highlight
@@ -71,7 +75,8 @@
   :config
   (ido-mode 1))
 
-(use-package dired-x)
+(use-package dired-details+
+  :ensure t)
 
 (use-package magit
   :config (progn
@@ -187,7 +192,7 @@ the name of FILE in the current directory, suitable for creation"
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (dired-details+ dired-x paredit evil-paredit image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))

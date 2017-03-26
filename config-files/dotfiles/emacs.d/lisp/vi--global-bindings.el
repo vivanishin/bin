@@ -1,5 +1,6 @@
 (global-set-key (kbd "C-c q") 'auto-fill-mode)
 (global-set-key (kbd "C-;") 'comment-line)
+(global-set-key (kbd "C-x C-j") 'dired-jump)
 
 ;; Compilation: save current buffer, recompile, then switch to results.
 (global-set-key
