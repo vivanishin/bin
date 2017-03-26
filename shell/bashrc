@@ -113,7 +113,7 @@ showfind()
            -a -not -path './.git/*' -a -not -path '*/autom4te.cache/*' \
            -a -not -name 'configure' -a -not -name 'ChangeLog*' | "
     [ ! "x$f_grep_filenames" = "xyes" ] && f_cmd="$f_cmd xargs "
-    f_cmd="$f_cmd grep $f_ignorecase -nH --color \"$1\" 2> /dev/null "
+    f_cmd="$f_cmd grep $f_ignorecase -nH --color=always \"$1\" 2> /dev/null "
     [ "x$f_show" = "xyes" ] && f_cmd="$f_cmd | awk -F: '{ print \"less \" \"+\" \$2 \" -N \" \$1  }' | sh -"
 
     if [ "x$f_print_command" = "xyes" ]
@@ -260,7 +260,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias L='less'
+alias L='less -R'
 
 alias j='jobs'
 alias v='vim'
