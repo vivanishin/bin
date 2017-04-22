@@ -11,8 +11,11 @@
  (add-to-list 'default-frame-alist '(font . "Inconsolata 10"))
  (setq x-pointer-shape x-pointer-arrow))
 
-(set-face-bold-p 'bold nil)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 (blink-cursor-mode -1)
+(set-face-bold-p 'bold nil)
 
 ;; Vim-like scrolling.
 (setq scroll-step 1)
@@ -131,9 +134,6 @@ the name of FILE in the current directory, suitable for creation"
 ;(require 'my-misc) ;; 'requires' are idempotent, you know
 ;(reverse-input-method "russian-computer")
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode nil)
 (setq tramp-default-method "scp")
 (setq column-number-mode t)
 (setq initial-scratch-message nil)
@@ -152,6 +152,7 @@ the name of FILE in the current directory, suitable for creation"
 (require 'cc-mode)
 (modify-syntax-entry ?_ "w" c-mode-syntax-table)
 (modify-syntax-entry ?_ "w" c++-mode-syntax-table)
+(modify-syntax-entry ?_ "w" python-mode-syntax-table)
 
 ;; Treat the dash symbol as a part of a word in emacs lisp.
 (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)

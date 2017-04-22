@@ -10,7 +10,7 @@
    (save-buffer)
    (recompile)
    (if (not (compilation-buffer-p (current-buffer)))
-       (switch-to-buffer-other-frame compilation-last-buffer))))
+       (switch-to-buffer-other-window compilation-last-buffer))))
 
 ;;; ------------------------------------------------------------
 ;;; Esc quits (http://stackoverflow.com/a/10166400/2104472)
