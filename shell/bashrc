@@ -293,9 +293,10 @@ alias trsn="tr ' ' '\n'"
 alias phgrep='cat ~/.persistent_history|grep --color'
 alias hgrep='history|grep --color'
 alias psgrep="ps -A | grep "
+
 alias crontab='crontab -i'
 alias sshowfind='showfind -s'
-#alias cgdb='LD_LIBRARY_PATH=/home/ivladak/inst/lib:/usr/lib64 cgdb'
+alias mplayer='mplayer -af scaletempo'
 
 alias def=sdcv
 
@@ -312,7 +313,7 @@ fi
 
 IGNOREEOF=3
 
-if ps -ef | grep tmux | grep ivladak | grep -v grep > /dev/null
+if ps -ef | grep tmux | grep $(id -un) | grep -v grep > /dev/null
 then
     tmux ls
 fi
