@@ -1,7 +1,7 @@
 #!/bin/bash -
 
-from='/Volumes/Kindle/documents/My Clippings.txt'
-to=$(date +%v | awk -F- '{ print "my-clippings-" $3 "-" $2 "-" $1 ".txt" }')
+from='/run/media/vlad/Kindle/documents/My Clippings.txt'
+to="my-clippings-"$(date +%Y-%m-%d)".txt"
 
 if [ -f "$from" ]
 then
