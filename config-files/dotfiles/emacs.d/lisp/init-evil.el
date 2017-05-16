@@ -47,6 +47,7 @@
     "q" 'auto-fill-mode
     "e" 'evil-append-line
     "t" 'find-tag
+    "rs" 'rm-eol-whitespace
     "gs" 'magit-status
     "gl" 'magit-log-all
     "gd" 'magit-diff

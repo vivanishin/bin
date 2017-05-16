@@ -80,6 +80,7 @@
 
 (use-package dired-details+
   :ensure t)
+(define-key dired-mode-map (kbd "SPC") 'dired-up-directory)
 
 (use-package magit
   :config (progn
@@ -138,8 +139,7 @@ the name of FILE in the current directory, suitable for creation"
 (setq column-number-mode t)
 (setq initial-scratch-message nil)
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 5)
-(setq-default c-basic-offset 2)
+(setq-default c-basic-offset 8)
 (setq-default c-default-style "gnu")
 (setq-default comment-multi-line t)
 (setq-default comment-style 'extra-line)
@@ -152,10 +152,12 @@ the name of FILE in the current directory, suitable for creation"
 (require 'cc-mode)
 (modify-syntax-entry ?_ "w" c-mode-syntax-table)
 (modify-syntax-entry ?_ "w" c++-mode-syntax-table)
-(modify-syntax-entry ?_ "w" python-mode-syntax-table)
 
 ;; Treat the dash symbol as a part of a word in emacs lisp.
 (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)
+
+(require 'python-mode)
+(modify-syntax-entry ?_ "w" python-mode-syntax-table)
 
 
 ;;; ------------------------------------------------------------
@@ -184,7 +186,6 @@ the name of FILE in the current directory, suitable for creation"
  '(custom-safe-themes
    (quote
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(org-startup-truncated nil)
  '(package-archives
    (quote
     (("melpa" . "http://melpa.org/packages/")
@@ -193,7 +194,7 @@ the name of FILE in the current directory, suitable for creation"
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (dired-details+ dired-x paredit evil-paredit image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (dired-details+ image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))
