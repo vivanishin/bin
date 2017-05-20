@@ -150,11 +150,14 @@ the name of FILE in the current directory, suitable for creation"
 
 ;; Treat underscore as a part of a word in C and C++ modes.
 (require 'cc-mode)
+(require 'python-mode)
+(require 'tex-mode)
 (modify-syntax-entry ?_ "w" c-mode-syntax-table)
 (modify-syntax-entry ?_ "w" c++-mode-syntax-table)
 
 ;; Treat the dash symbol as a part of a word in emacs lisp.
 (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)
+(modify-syntax-entry ?- "w" tex-mode-syntax-table)
 
 (require 'python-mode)
 (modify-syntax-entry ?_ "w" python-mode-syntax-table)
