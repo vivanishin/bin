@@ -98,6 +98,11 @@
 (use-package xcscope
   :ensure t)
 
+(use-package grep-a-lot
+  :ensure t
+  :config
+  (grep-a-lot-setup-keys))
+
 
 ;;; ------------------------------------------------------------
 ;;; Build with make. https://emacswiki.org/emacs/CompileCommand#toc5
@@ -197,7 +202,7 @@ the name of FILE in the current directory, suitable for creation"
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (dired-details+ image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (grep-a-lot dired-details+ image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))
