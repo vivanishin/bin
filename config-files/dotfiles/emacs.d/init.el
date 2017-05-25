@@ -52,6 +52,10 @@
 (use-package highlight
   :ensure t)
 
+;; TODO: https://github.com/noctuid/lispyville
+(use-package lispy
+  :ensure t)
+
 (use-package evil
   :ensure t
 
@@ -166,6 +170,8 @@ the name of FILE in the current directory, suitable for creation"
 (require 'python-mode)
 (modify-syntax-entry ?_ "w" python-mode-syntax-table)
 
+;; TODO: Remove sensitive data and check in init-gnus.el
+(require 'init-gnus)
 
 ;;; ------------------------------------------------------------
 ;;; The rest of my key mappings. Makes sense to put it after all package loads.
@@ -201,7 +207,7 @@ the name of FILE in the current directory, suitable for creation"
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (grep-a-lot dired-details+ image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (lispy grep-a-lot dired-details+ image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t))
