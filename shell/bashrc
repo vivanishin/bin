@@ -37,6 +37,15 @@ killexcept()
   rm $tmpfile
 }
 
+ec()
+{
+  set -x
+  emacsclient "$@" &
+  disown "%$(jobs | tail -1 | tr -d '[]+-'  | awk '{print $1}')"
+  echo
+  set +x
+}
+
 dotag()
 {
   ctags -R &
@@ -274,7 +283,6 @@ alias L='less -R'
 alias j='jobs'
 alias v='vim'
 alias vi='vim'
-alias ec='emacsclient'
 
 alias ta='tmux a -t'
 alias td='tmux detach'
