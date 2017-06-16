@@ -6,3 +6,5 @@
 [alias]
 	checkout = co
 	co = checkout
+[core]
+	excludesfile = /home/ivladak/.gitignore-global
