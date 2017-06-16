@@ -24,6 +24,7 @@ nnoremap <Leader>tl :TlistToggle<CR>
 nnoremap <leader>gd :Git diff<CR>
 
 nnoremap <Leader>dt :call Dotag()<CR>
+nnoremap <Leader>o :call Outline()<CR>
 " Iterate over tabs forward and backward with gt/tg.
 nnoremap tg gT
 nnoremap <Leader>3 #
@@ -60,6 +61,8 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 nnoremap <silent> <C-t> :tag |
 " Remove spaces before newlines.
 nmap <leader>rs :%s/\s\+$//<CR>
+" Apply macro 'm'.
+nmap <leader>m @m
 " Toggle spell check.
 map <F6> :set spell!<CR>
 " Replace sequences of 8 spaces with tabs (WIP).
@@ -102,6 +105,10 @@ let g:NERD_use_ada_with_spaces = 1
 function! Dotag()
  :! dotag
  :cs reset
+endfunction
+
+function! Outline()
+ :! outline %
 endfunction
 
 hi Comment	guifg=#007f7f cterm=none
