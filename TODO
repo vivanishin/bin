@@ -1,3 +1,4 @@
+* [bash]: ^C -> save the command in history with prepended '#'
 * ml-grep: add the auto-download function
 * rcre should be able to reload bashrc for all tmux sessions
 * Either separate scripts or at least functions in separate files like in http://unix.stackexchange.com/a/282331/128174

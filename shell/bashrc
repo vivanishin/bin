@@ -287,6 +287,7 @@ alias vi='vim'
 alias ta='tmux a -t'
 alias td='tmux detach'
 alias tn='tmux new-session -s'
+alias tls='tmux ls'
 
 alias gs='git status'
 alias gsn='git status --untracked=no'
