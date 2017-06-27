@@ -55,6 +55,7 @@
     "gs" 'magit-status
     "gl" 'magit-log-all
     "gd" 'magit-diff
+    "bl" 'toggle-blame-mode
     "3" 'evil-search-word-backward
     "8" 'evil-search-word-forward))
 
