@@ -87,13 +87,15 @@
 (define-key dired-mode-map (kbd "SPC") 'dired-up-directory)
 
 (use-package magit
-  :config (progn
-            (setq evil-magit-want-horizontal-movement t)
-            (setq git-commit-summary-max-length 50)
-            (use-package evil-magit
-              :ensure t
-              :config
-              (setq evil-magit-state 'normal)))
+  :config
+  (progn
+    (setq evil-magit-want-horizontal-movement t)
+    (setq git-commit-summary-max-length 50)
+    (use-package evil-magit
+      :ensure t
+      :config
+      (setq evil-magit-state 'normal)))
+  (add-hook 'magit-revision-mode-hook 'bug-reference-mode)
   :ensure t)
 
 (use-package pdf-tools
