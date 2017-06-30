@@ -86,7 +86,7 @@ strace_wrapper()
   local options=(-yy -f -s 1024)
   local trace="-e trace=execve,vfork"
   (! echo $TRACE_OPTS | grep noenv > /dev/null) && options+=(-v)
-  (echo $TRACE_OPTS | grep full > /dev/null) && trace="$trace,file,read,write"
+  (echo $TRACE_OPTS | grep full > /dev/null) && trace="$trace,file,read,write,chdir"
 
   options+=($trace)
   local logname="/tmp/strace-$strace_wrapper_static"
@@ -97,6 +97,7 @@ strace_wrapper()
 
   strace_wrapper_static=$((strace_wrapper_static + 1))
   echo "$logname"
+  strace-treeify "$logname"
 
   return $retcode
 }
