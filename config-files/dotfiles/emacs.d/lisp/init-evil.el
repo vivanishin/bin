@@ -15,7 +15,8 @@
   (delete 'term-mode evil-insert-state-modes)
 
   ;; Use visual state in these modes.
-  (dolist (mode '(grep-mode))
+  (dolist (mode '(grep-mode
+                  gnus-browse-mode))
     (add-to-list 'evil-motion-state-modes mode)) ;; Fucking 'h' calls describe-mode.
 
   ;; Use insert state in these additional modes.
