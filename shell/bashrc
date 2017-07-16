@@ -37,13 +37,13 @@ killexcept()
   rm $tmpfile
 }
 
-ec()
+e()
 {
-  set -x
-  emacsclient "$@" &
+  local cmd_str="emacs"
+  (pgrep emacs &> /dev/null) && cmd_str=$cmd_str"client"
+  $cmd_str "$@" &
   disown "%$(jobs | tail -1 | tr -d '[]+-'  | awk '{print $1}')"
   echo
-  set +x
 }
 
 dotag()
