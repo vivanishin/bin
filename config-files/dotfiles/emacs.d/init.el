@@ -82,9 +82,12 @@
   :config
   (ido-mode 1))
 
+(require 'dired)
+(define-key dired-mode-map (kbd "SPC") 'dired-up-directory)
+(add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+
 (use-package dired-details+
   :ensure t)
-(define-key dired-mode-map (kbd "SPC") 'dired-up-directory)
 
 (use-package magit
   :config
