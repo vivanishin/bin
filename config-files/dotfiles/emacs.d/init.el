@@ -49,9 +49,11 @@
   (recentf-mode 1)
   :bind (("C-x f" . recentf-open-files)))
 
-(use-package image+
+(use-package wc-mode
   :ensure t)
 
+(use-package image+
+  :ensure t)
 
 (require 'init-evil)
 
