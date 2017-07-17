@@ -37,6 +37,12 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(use-package default-text-scale
+  :ensure t
+  :config
+  :bind (("C-M-=" . default-text-scale-increase)
+         ("C-M--" . default-text-scale-decrease)))
+
 (use-package recentf
   :ensure t
   :config
@@ -216,10 +222,11 @@ the name of FILE in the current directory, suitable for creation"
      ("org" . "http://orgmode.org/elpa/"))))
  '(package-selected-packages
    (quote
-    (python-info bbdb grep-a-lot lispy dired-details+ dired-x paredit evil-paredit image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
+    (wc-mode default-text-scale python-info bbdb grep-a-lot lispy dired-details+ dired-x paredit evil-paredit image+ key-chord xcscope evil-search-highlight-persist highlight evil-leader pdf-tools evil-magit magit use-package solarized-theme evil)))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
- '(show-paren-mode t))
+ '(show-paren-mode t)
+ '(wc-modeline-format "WC[%c/%tc]"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
