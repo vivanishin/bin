@@ -37,6 +37,7 @@ usage_and_exit()
 		modifiers:
 		    -t, --target      only do the actions for target (skip host)
 		    -h, --host        only do the actions for host (skip target)
+		    --release         don't pass debug CXXFLAGS to make
 		paths:
 		    -s, --src-dir <dir>             specify the source directory (GCC_TOP)
 		    -b, --build-dir-prefix <dir>    specify the prefix of build directories
@@ -59,6 +60,8 @@ host_CONFIG_OPTS="--disable-multilib --enable-languages=c,c++,fortran,lto --pref
 SRC_DIR="$HOME/src/gcc-gomp"
 BLD_DIR_PREFIX="$HOME/build"
 
+dbgflags="-g3 -O0 -fno-inline-functions"
+
 if [ $# -eq 0 ]; then
   usage_and_exit 1
 fi
@@ -66,6 +69,9 @@ fi
 while test $# -gt 0
 do
   case $1 in
+    -release | --release )
+      dbgflags=""
+      ;;
     -t | -target | --target )
       target_only="yes"
       ;;
@@ -201,8 +207,8 @@ do
   fi
 
   if [ ! "x$configure" == "xyes" ]; then
-    make STAGE1_CXXFLAGS="-g3 -O0 -fno-inline-functions" all-stage1 -j20 || error "make all-stage-1 failed" "$targethost"
-    make CXXFLAGS="-g3 -O0 -fno-inline-functions" -j20 || error "make failed" "$targethost"
+    make STAGE1_CXXFLAGS="$dbgflags" all-stage1 -j20 || error "make all-stage-1 failed" "$targethost"
+    make CXXFLAGS="$dbgflags" -j20 || error "make failed" "$targethost"
   fi
 
   if [ ! "x$make_only" = "xyes" ] || [ "x$install" = "xyes" ]; then
