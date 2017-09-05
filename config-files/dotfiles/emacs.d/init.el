@@ -158,6 +158,7 @@ the name of FILE in the current directory, suitable for creation"
 ;(reverse-input-method "russian-computer")
 
 (setq tramp-default-method "scp")
+(setq enable-remote-dir-locals t)
 (setq column-number-mode t)
 (setq initial-scratch-message nil)
 (setq-default indent-tabs-mode nil)
@@ -234,6 +235,9 @@ the name of FILE in the current directory, suitable for creation"
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
+ '(tramp-remote-path
+   (quote
+    ("/usr/local/bin" "/usr/bin" "/bin" tramp-default-remote-path)) nil (tramp))
  '(wc-modeline-format "WC[%c/%tc]"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
