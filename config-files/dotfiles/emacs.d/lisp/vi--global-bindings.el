@@ -1,16 +1,7 @@
 (global-set-key (kbd "C-c q") 'auto-fill-mode)
 (global-set-key (kbd "C-;") 'comment-line)
 (global-set-key (kbd "C-x C-j") 'dired-jump)
-
-;; Compilation: save current buffer, recompile, then switch to results.
-(global-set-key
- (kbd "<f7>")
- (lambda () (interactive)
-   "Recompile and switch to compilation buffer."
-   (save-buffer)
-   (recompile)
-   (if (not (compilation-buffer-p (current-buffer)))
-       (switch-to-buffer-other-window compilation-last-buffer))))
+(global-set-key (kbd "<f7>") (lambda () (interactive) (recompile)))
 
 ;;; ------------------------------------------------------------
 ;;; Esc quits (http://stackoverflow.com/a/10166400/2104472)
