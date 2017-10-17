@@ -33,6 +33,7 @@
   (setq current-frame (car (car (cdr (current-frame-configuration)))))
   (select-frame-set-input-focus current-frame))
 
+(setq compilation-always-kill t)
 (add-to-list 'compilation-finish-functions
 	     'notify-compilation-result)
 
