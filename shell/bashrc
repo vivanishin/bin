@@ -37,15 +37,6 @@ killexcept()
   rm $tmpfile
 }
 
-e()
-{
-  local cmd_str="emacs"
-  (pgrep emacs &> /dev/null) && cmd_str=$cmd_str"client"
-  $cmd_str "$@" &
-  disown "%$(jobs | tail -1 | tr -d '[]+-'  | awk '{print $1}')"
-  echo
-}
-
 dotag()
 {
   ctags -R &
@@ -224,6 +215,7 @@ export PATH=$(path_remove_dups $PATH)
 [ -z "$PS1" ] && return
 
 export EDITOR=vim
+export ALTERNATE_EDITOR=""
 export LSCOLORS="ExGxcxdxCxegedabagacad"
 export CLICOLOR=YES
 
@@ -284,6 +276,9 @@ alias L='less -R'
 alias j='jobs'
 alias v='vim'
 alias vi='vim'
+alias e='emacsclient'
+alias ec='emacsclient -c'
+alias et='emacsclient -t'
 
 alias ta='tmux a -t'
 alias td='tmux detach'

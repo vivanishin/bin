@@ -26,8 +26,6 @@
 (setq-default fill-column 80)
 (auto-fill-mode)
 
-(server-start)
-
 ;;; ------------------------------------------------------------
 ;;; Window management.
 (require 'vi--windows)
