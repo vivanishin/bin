@@ -8,7 +8,8 @@
 (when window-system
  (require 'solarized)
  (load-theme 'solarized-dark t) ;wombat; misterioso; wheatgrass
- (add-to-list 'default-frame-alist '(font . "Inconsolata 10"))
+ (add-to-list 'default-frame-alist '(font . "Inconsolata LGC 10"))
+ (set-face-attribute 'default t :font "Inconsolata LGC 10")
  (setq x-pointer-shape x-pointer-arrow))
 
 (menu-bar-mode -1)
