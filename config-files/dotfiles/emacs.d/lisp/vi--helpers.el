@@ -25,13 +25,14 @@
   "Notify that the compilation is finished,
     close the *compilation* buffer if the compilation is successful,
     and set the focus back to Emacs frame"
-  (if (string-match "^finished" msg)
-      (progn
-        (delete-windows-on buffer)
-        (message "\n Compilation Successful :-) \n "))
-    (message "\n Compilation Failed :-( \n "))
-  (setq current-frame (car (car (cdr (current-frame-configuration)))))
-  (select-frame-set-input-focus current-frame))
+  (if (not (string-match "*grep*" (buffer-name buffer)))
+      (if (string-match "^finished" msg)
+          (progn
+            (delete-windows-on buffer)
+            (message "Compilation Successful :-)"))
+        (message "Compilation Failed :-("))
+    (setq current-frame (car (car (cdr (current-frame-configuration)))))
+    (select-frame-set-input-focus current-frame)))
 
 (setq compilation-always-kill t)
 (add-to-list 'compilation-finish-functions
