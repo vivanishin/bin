@@ -17,7 +17,13 @@
   ;; Use visual state in these modes.
   (dolist (mode '(grep-mode
                   gnus-browse-mode))
-    (add-to-list 'evil-motion-state-modes mode)) ;; Fucking 'h' calls describe-mode.
+    (add-to-list 'evil-motion-state-modes mode))
+
+  ;; Despite the above, 'h' keeps calling describe-mode. Fix that:
+  (dolist (modename '("grep-mode"
+                      "gnus-browse-mode"))
+    (add-hook (intern (concat modename "-hook"))
+              (lambda () (local-set-key (kbd "h") 'evil-backward-char))))
 
   ;; Use insert state in these additional modes.
   (dolist (mode '(magit-log-edit-mode))
