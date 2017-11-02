@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t -*-
+
 ;; TODO: Help mode, Magit log mode, MagitPopup mode. 
 (require 'vi--helpers)
 
@@ -14,15 +16,12 @@
 
   (delete 'term-mode evil-insert-state-modes)
 
-  ;; Use visual state in these modes.
-  (dolist (mode '(grep-mode
-                  gnus-browse-mode))
-    (add-to-list 'evil-motion-state-modes mode))
-
-  ;; Despite the above, 'h' keeps calling describe-mode. Fix that:
-  (dolist (modename '("grep-mode"
-                      "gnus-browse-mode"))
-    (add-hook (intern (concat modename "-hook"))
+  (dolist (mode-name '("grep-mode"
+                       "gnus-browse-mode"))
+    ;; Use visual state in these modes.
+    (add-to-list 'evil-motion-state-modes (intern mode-name))
+    ;; Despite the above, 'h' keeps calling describe-mode. Fix that:
+    (add-hook (intern (concat mode-name "-hook"))
               (lambda () (local-set-key (kbd "h") 'evil-backward-char))))
 
   ;; Use insert state in these additional modes.
