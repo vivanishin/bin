@@ -7,6 +7,16 @@ weather()
     curl "http://wttr.in/${1:-Moscow}"
 }
 
+up() {
+    local cnt=${1:-1}
+    local old_wd=$PWD
+    while [ "$cnt" -gt 0 ]; do
+            cnt=$((cnt - 1))
+            cd ../
+    done
+    OLDPWD=$old_wd
+}
+
 # Cause gdb to reinitialize tui mode.
 sigwinch()
 {
