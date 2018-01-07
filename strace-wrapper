@@ -1,0 +1,18 @@
+#!/bin/bash -
+
+options=(-yy -f -s 1024)
+trace="-e trace=execve,vfork"
+! echo $TRACE_OPTS | grep -q noenv && options+=(-v)
+echo $TRACE_OPTS | grep -q full && trace="$trace,file,read,write,chdir,stat"
+
+options+=($trace)
+logname="/tmp/strace-$(ls /tmp/strace-* | wc -l)"
+options+=(-o "$logname" "$@")
+
+strace "${options[@]}"
+retcode=$?
+
+echo "$logname"
+strace-treeify "$logname"
+
+exit $retcode

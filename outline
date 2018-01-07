@@ -1,0 +1,13 @@
+# !/bin/sh -
+# Print names of all the functions and defined macros in the C source file
+# given it follows the GNU coding style conventions.
+
+sed -n '/^\([a-zA-Z0-9_:]\{1,\}\) (/p' $@  |
+  awk '{ print $1 }' |
+    sort -u
+
+echo "--"
+
+sed -n '/^[[:space:]]\{0,\}#define[[:space:]]\{0,\}\([a-zA-Z0-9_:]\{1,\}\)(/p' $@ |
+  awk -F'[( \t]' '{ print $2 }' |
+    sort -u

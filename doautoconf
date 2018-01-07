@@ -1,0 +1,10 @@
+#!/bin/sh -
+
+old="$PWD"
+bindir="/home/ivladak/inst/autoconf/bin"
+for subdir in "" "gcc" "libgomp" "libgfortran" "libiberty" "lto-plugin"
+do
+  cd "/home/ivladak/src/gcc-gomp/$subdir" || echo "doautoconf: FAILed to cd" >&2
+  $bindir/autoconf || echo "doautoconf: FAIL" >&2
+done
+cd "$old"

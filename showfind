@@ -1,0 +1,43 @@
+#!/bin/sh -
+
+# This is not a very useful script once you master grep.
+
+f_show=""
+f_grep_filenames=""
+f_print_command=""
+f_ignorecase=""
+f_color="--color=always"
+while [ $# -gt 0 ]
+do
+    case $1 in
+    -s | -sh | -sho | -show )
+      f_show="yes"
+      f_color="--color"
+    ;;
+    -f | -fi | -fil | -file | -filenames ) f_grep_filenames="yes" ;;
+    -c | -cm | -cmd | -command ) f_print_command="yes" ;;
+    -i ) f_ignorecase="-i" ;;
+    * ) break ;;
+    esac
+    shift
+done
+
+#f_cmd='find . -name "*.[chCH]" -o -name "*.def" -o -name "*.in" -o -name "*.ac" -o -iname "*Make*" | '
+
+f_cmd="find . -type f -a -not -name '.*' -a -not -name 'cscope.out' -a -not -name 'tags' -a -not -name 'ccglue.out*' \
+       -a -not -path './.git/*' -a -not -path '*/autom4te.cache/*' \
+       -a -not -name 'configure' -a -not -name 'ChangeLog*' | "
+
+[ ! "x$f_grep_filenames" = "xyes" ] && f_cmd="$f_cmd xargs "
+
+f_cmd="$f_cmd grep $f_ignorecase -nH $f_color \"$1\" 2> /dev/null "
+
+[ "x$f_show" = "xyes" ] && f_cmd="$f_cmd | awk -F: '{ print \"less \" \"+\" \$2 \" -N \" \$1  }' | sh -"
+
+if [ "x$f_print_command" = "xyes" ]
+then
+    echo "$f_cmd"
+    return
+fi
+
+eval $f_cmd

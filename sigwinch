@@ -1,0 +1,4 @@
+#!/bin/sh -
+
+# Cause all gdb processes to reinitialize tui mode by sending them SIGWINCH.
+kill -SIGWINCH $(ps -u $(id -u) | grep -w gdb | awk '{print $1}' | tr '\n' ' ')
