@@ -153,14 +153,15 @@ if [ ! "x$configure" = "xyes" ]; then
 fi
 
 # Make a symlink so GCC builds newlib automaically. For targets which need newlib.
-# TODO: don't do this for host-only builds
-if echo $target | grep "nvptx" 2>/dev/null 1>&2; then
-  LINK=$SRC_DIR/newlib
-  if [ -e $LINK ] && [ -h $LINK ]
-  then
-    echo "symbolic link $LINK already exists, skipping"
-  else
-    ln -s $HOME/src/nvptx-newlib/newlib $LINK || error "ln failed"
+if [ "$host_only" != "yes" ]; then
+  if echo $target | grep "nvptx" 2>/dev/null 1>&2; then
+    LINK=$SRC_DIR/newlib
+    if [ -e $LINK ] && [ -h $LINK ]
+    then
+      echo "symbolic link $LINK already exists, skipping"
+    else
+      ln -s $HOME/src/nvptx-newlib/newlib $LINK || error "ln failed"
+    fi
   fi
 fi
 # export CC="/home/ivladak/inst/ncc-2.8/usr/bin/ncc -ncgcc -ncld -ncspp -ncfabs"
