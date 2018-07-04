@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys
 import os.path
@@ -31,13 +31,14 @@ def expand_at_symbol(s):
 
 while True:
     try:
-        at_expanded = expand_at_symbol(raw_input().translate(None, '",][()\''))
+        delchars = str.maketrans({i: None for i in '",][()\''})
+        at_expanded = expand_at_symbol(input().translate(delchars))
         words = at_expanded.split()
         # At this point words usually contain [<pid> command command <args...> ]
         start_idx = 2 if words[1] == words[2] else 0
-        print " ".join(words[start_idx:])
+        print(" ".join(words[start_idx:]))
     except EOFError:
         sys.exit()
     except Exception as e:
-        print e
-	sys.exit(1)
+        print(e)
+        sys.exit(1)

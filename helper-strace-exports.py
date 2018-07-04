@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 
 # It is not a standalone script, it does not do the whole job of processing...
 # Because the rest it easier for me to do with sed.
@@ -18,5 +18,5 @@ for line in inp:
 
 splitted = lines[0].split(' "')
 for i in splitted:
-    print i[:-2]
+    print(i[:-2])
 
