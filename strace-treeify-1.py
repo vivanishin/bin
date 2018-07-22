@@ -1,13 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys
 
 def usage():
-  print "treeify-strace <pid-ancestry-data> <pid-exec-data>"
-  print "    The first argument is a file containing a 2-column table:"
-  print "    <pid parent> <pid child>."
-  print "    The second argument is a talbe containing a mapping from pids to"
-  print "    their payloads (arbitrary strings) separated with a space."
+  print("treeify-strace <pid-ancestry-data> <pid-exec-data>")
+  print("    The first argument is a file containing a 2-column table:")
+  print("    <pid parent> <pid child>.")
+  print("    The second argument is a talbe containing a mapping from pids to")
+  print("    their payloads (arbitrary strings) separated with a space.")
 
 if (len(sys.argv) < 3):
   usage()
@@ -33,7 +33,7 @@ for line in open(sys.argv[2]):
 def dfs(p, i):
   if p in vis:
     return
-  print "  " * i + str(p) + " " + payloads[p]
+  print("  " * i + str(p) + " " + payloads[p])
   vis.add(p)
   for c in sorted(children[p]):
     dfs(c, i + 1)
