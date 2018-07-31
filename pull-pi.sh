@@ -2,8 +2,8 @@
 
 for i in /mnt/co/*
 do
-  [ ! -d $i ] && continue
-  cd $i || continue
+  [ ! -d "$i" ] && continue
+  cd "$i" || continue
   git rev-parse --is-inside-work-tree >/dev/null 2>&1 || continue
 
   unstaged=false
@@ -11,7 +11,7 @@ do
   then
     [ "$(git diff --staged | wc -c)" -ne 0 ] && continue
     [ "$(git diff | wc -c)" -ne 0 ] && unstaged=true
-    echo $i
+    echo "$i"
     if [ "$unstaged" = "true" ]; then
       git stash save "$0: auto-saving"
     fi
