@@ -2,12 +2,11 @@
 
 import sys
 import os.path
-import string
 
 def contents(filename):
   result = ""
   for line in open(filename):
-    result += line.translate(string.maketrans("\n", " "))
+    result += line.translate(str.maketrans("\n", " "))
   return result
 
 def expand_at_symbol(s):
