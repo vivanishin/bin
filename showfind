@@ -37,7 +37,7 @@ f_cmd="$f_cmd grep $f_ignorecase -nH $f_color \"$1\" 2> /dev/null "
 if [ "x$f_print_command" = "xyes" ]
 then
     echo "$f_cmd"
-    return
+    exit
 fi
 
 eval $f_cmd
