@@ -1,0 +1,35 @@
+#!/bin/sh -
+
+# fdump-pdf
+# Use like this:
+#   gcc -fdump-tree-all-graph file.c
+#   fdump-pdf file.c
+# -> file.c.pdf is produced with IR graphs after each pass
+
+trap 'rm $tmps' EXIT
+
+fancify()
+{
+    fancy_dump=$(mktemp)
+    label=$(head -1 $1 | grep -oE '".*"')
+    head -n -1 $1 > $fancy_dump
+    echo "label=$label;" >> $fancy_dump
+    echo "}" >> $fancy_dump
+    echo $fancy_dump
+}
+
+workers=""
+files=""
+tmps=""
+for dot_dump in $1*.dot
+do
+    fancy_dump=$(fancify $dot_dump)
+    out=$dot_dump.pdf
+    files="$files $out"
+    dot -Tpdf $fancy_dump > $out &
+    workers="$workers $!"
+    tmps="$tmps $fancy_dump"
+done
+
+wait $workers
+pdfunite $files $1.pdf
