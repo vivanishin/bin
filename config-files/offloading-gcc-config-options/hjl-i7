@@ -1,0 +1,1 @@
+--with-arch=corei7 --with-cpu=corei7 --prefix=/mnt/prefix/test/hjl-i7 --enable-clocale=gnu --with-system-zlib --enable-shared --enable-cet --with-demangler-in-ld --enable-libmpx --with-fpmath=sse

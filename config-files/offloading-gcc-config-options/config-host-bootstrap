@@ -1,0 +1,1 @@
+--disable-static --disable-decimal-float --disable-libgomp --disable-libmudflap --disable-nls --disable-multilib --enable-lto --enable-languages=c,c++,lto --prefix=/mnt/prefix --build=x86_64-pc-linux-gnu --host=x86_64-pc-linux-gnu --target=x86_64-pc-linux-gnu --enable-bootstrap
