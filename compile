@@ -1,0 +1,25 @@
+#!/bin/sh -
+
+# Compile a program with GCC, and output the result in nasm syntax to stdout.
+# The compilation is done in 32-bit mode, using a default set of options.
+# You can pass extra options (compiler flags) as arguments to this script.
+# Usage:
+# compile <source> [<extra-options> ...]
+
+trap 'rm -f $tmp ${tmp}.s' EXIT
+
+filename="$1"
+shift
+
+tmp=$(mktemp)
+
+gcc "$filename" -c -m32 -Os -masm=intel \
+  -Wall -Wextra \
+  -fno-pic \
+  -fno-stack-protector  \
+  -fno-omit-frame-pointer \
+  -fno-asynchronous-unwind-tables \
+  $@ \
+  -o $tmp
+objconv -fnasm $tmp ${tmp}.s
+cat $tmp.s
