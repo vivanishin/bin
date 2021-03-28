@@ -1,7 +1,7 @@
 #!/bin/sh -
 
 # Compile a program with GCC, and output the result in nasm syntax to stdout.
-# The compilation is done in 32-bit mode, using a default set of options.
+# The compilation is done in 32-bit mode, using a predefined set of options.
 # You can pass extra options (compiler flags) as arguments to this script.
 #
 # Usage:
