@@ -1,15 +1,50 @@
 #!/bin/bash -
 
+die()
+{
+    echo "$*" >&2
+    exit 1
+}
+
 options=(-yy -f -s 1024)
+record_env=true
 trace="-e trace=execve,vfork"
-! echo $TRACE_OPTS | grep -q noenv && options+=(-v)
-echo $TRACE_OPTS | grep -q full && trace="$trace,file,read,write,chdir,stat"
+wrapper_opts_ended=false
+prog_arguments=()
+while [ "$#" -ne 0 ]
+do
+  $wrapper_opts_ended && break
+  case "$1" in
+    --noenv)
+      record_env=false
+      ;;
+    --full)
+      # TODO: I think %file should include chdir (check).
+      trace="$trace,%file,%desc,chdir,%%stat"
+      ;;
+    --)
+      wrapper_opts_ended=true
+      ;;
+    *)
+      die "$0: unknown option $1"
+      ;;
+  esac
+  shift
+done
 
-options+=($trace)
-logname="/tmp/strace-$(ls /tmp/strace-* | wc -l)"
-options+=(-o "$logname" "$@")
+! $wrapper_opts_ended && die "$0: end wrapper's options with a --"
 
-strace "${options[@]}"
+while [ "$#" -ne 0 ]
+do
+  prog_arguments+=("$1")
+  shift
+done
+
+$record_env && options+=(-v)
+logname="/tmp/strace-$(ls /tmp/strace-* 2>/dev/null | wc -l)"
+options+=($trace -o "$logname" "$@")
+
+strace "${options[@]}" "${prog_arguments[@]}"
 retcode=$?
 
 echo "$logname"
