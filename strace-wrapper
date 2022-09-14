@@ -20,7 +20,10 @@ do
       ;;
     --full)
       # TODO: I think %file should include chdir (check).
-      trace="$trace,%file,%desc,chdir,%%stat"
+      trace="$trace,%file,%desc,chdir,%%stat,%network,%ipc,%process"
+      ;;
+    --all)
+      trace="-e trace=all"
       ;;
     --)
       wrapper_opts_ended=true
