@@ -4,4 +4,4 @@
 *.pyc
 config.py
 mailing-list-archives/gcc-ml/gcc.gnu.org/*
-z/*
+z/
