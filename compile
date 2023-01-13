@@ -21,7 +21,7 @@ shift
 
 tmp=$(mktemp)
 
-gcc "$filename" -c -m32 -Os -masm=intel \
+gcc "$filename" -c -mno-sse -m32 -Os -fno-optimize-sibling-calls -masm=intel \
   -Wall -Wextra \
   -fno-pic \
   -fno-stack-protector  \
