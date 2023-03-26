@@ -7,6 +7,7 @@ die()
 }
 
 options=(-yy -f -s 1024)
+dump_options=false
 record_env=true
 trace="-e trace=execve,vfork"
 wrapper_opts_ended=false
@@ -15,6 +16,9 @@ while [ "$#" -ne 0 ]
 do
   $wrapper_opts_ended && break
   case "$1" in
+      -d|--dump*)
+          dump_options=true
+          ;;
     --noenv)
       record_env=false
       ;;
@@ -35,6 +39,14 @@ do
   shift
 done
 
+$record_env && options+=(-v)
+options+=("$trace")
+
+if $dump_options; then
+    echo "strace ${options[*]}"
+    exit
+fi
+
 ! $wrapper_opts_ended && die "$0: end wrapper's options with a --"
 
 while [ "$#" -ne 0 ]
@@ -43,9 +55,8 @@ do
   shift
 done
 
-$record_env && options+=(-v)
 logname="/tmp/strace-$(ls /tmp/strace-* 2>/dev/null | wc -l)"
-options+=($trace -o "$logname" "$@")
+options+=(-o "$logname" "$@")
 
 strace "${options[@]}" "${prog_arguments[@]}"
 retcode=$?
