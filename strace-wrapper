@@ -14,29 +14,29 @@ wrapper_opts_ended=false
 prog_arguments=()
 while [ "$#" -ne 0 ]
 do
-  $wrapper_opts_ended && break
-  case "$1" in
-      -d|--dump*)
-          dump_options=true
-          ;;
-    --noenv)
-      record_env=false
-      ;;
-    --full)
-      # TODO: I think %file should include chdir (check).
-      trace="$trace,%file,%desc,chdir,%%stat,%network,%ipc,%process"
-      ;;
-    --all)
-      trace="-e trace=all"
-      ;;
-    --)
-      wrapper_opts_ended=true
-      ;;
-    *)
-      die "$0: unknown option $1"
-      ;;
-  esac
-  shift
+    $wrapper_opts_ended && break
+    case "$1" in
+        -d|--dump*)
+            dump_options=true
+            ;;
+        --noenv)
+            record_env=false
+            ;;
+        --full)
+            # TODO: I think %file should include chdir (check).
+            trace="$trace,%file,%desc,chdir,%%stat,%network,%ipc,%process"
+            ;;
+        --all)
+            trace="-e trace=all"
+            ;;
+        --)
+            wrapper_opts_ended=true
+            ;;
+        *)
+            die "$0: unknown option $1"
+            ;;
+    esac
+    shift
 done
 
 $record_env && options+=(-v)
@@ -51,8 +51,8 @@ fi
 
 while [ "$#" -ne 0 ]
 do
-  prog_arguments+=("$1")
-  shift
+    prog_arguments+=("$1")
+    shift
 done
 
 logname="/tmp/strace-$(ls /tmp/strace-* 2>/dev/null | wc -l)"
