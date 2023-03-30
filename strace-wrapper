@@ -9,7 +9,7 @@ die()
 options=(-yy -f -s 1024)
 dump_options=false
 record_env=true
-trace="-e trace=execve,vfork"
+trace="execve,vfork"
 wrapper_opts_ended=false
 prog_arguments=()
 while [ "$#" -ne 0 ]
@@ -27,7 +27,7 @@ do
             trace="$trace,%file,%desc,chdir,%%stat,%network,%ipc,%process"
             ;;
         --all)
-            trace="-e trace=all"
+            trace="all"
             ;;
         --)
             wrapper_opts_ended=true
@@ -40,7 +40,7 @@ do
 done
 
 $record_env && options+=(-v)
-options+=("$trace")
+options+=(-e trace="$trace")
 
 if $dump_options; then
     echo "strace ${options[*]}"
