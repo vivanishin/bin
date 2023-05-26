@@ -6,9 +6,9 @@
 
 patch=$1
 
-sed -n "/@@/,/@@/ p" "$patch" |
+sed -nE "/@@/,/(@@|--)/ p" "$patch" |
     tail -n +2 | head -n -1 |
-    grep -v '^[+-]' |
+    grep -v '^[+]' |
     sed 's/^.//'
 
 # Compare the result to:
