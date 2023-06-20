@@ -23,6 +23,7 @@ cat > "$f/command.c" << EOF
 #include <fcntl.h>
 #include <limits.h>
 #include <sched.h>
+#include <setjmp.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
