@@ -1,0 +1,16 @@
+#!/bin/bash
+
+die()
+{
+    [ -n "$*" ] && echo "$@" >&2
+    exit 1
+}
+
+target_base=$1
+[ -n "$target_base" ] || die "Supply the directory to copy the thinned tree to"
+
+while IFS= read -r file; do
+    dir=${target_base}/${file%/*}
+    mkdir -p "$dir" || die
+    cp "$file" "$dir" || die
+done
