@@ -1,7 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$#" = 0 ]; then
-    echo "usage: $0 [-w wrapper] <C code...>" >&2
+    {
+        echo "usage: $0 [-w wrapper] <C code...>"
+        echo "CFLAGS environment variable is honored."
+    } >&2
     exit 1
 fi
 
@@ -34,12 +37,16 @@ cat > "$f/command.c" << EOF
 int
 main(int argc, char *argv[], char *envp[])
 {
+        (void)argc;
+        (void)argv;
+        (void)envp;
 	$1;
 	return 0;
 }
 EOF
 shift
-if ! gcc -o "$f/command" "$f/command.c" $@; then
+# shellcheck disable=SC2086
+if ! gcc $CFLAGS -o "$f/command" "$f/command.c" "$@"; then
     exit 1
 fi
 if [ -n "$wrapper" ]; then
