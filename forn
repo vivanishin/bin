@@ -1,0 +1,15 @@
+#!/bin/bash
+
+die()
+{
+    [ $# -gt 0 ] && echo >&2 "$@"
+    exit 1
+}
+
+niter=$1
+shift
+printf "%d" "$niter" >/dev/null || die "usage: $0 NITER COMMAND..."
+
+for i in $(seq "$niter"); do
+	"$@" || die "failed at iteration $i"
+done
