@@ -16,6 +16,6 @@ SELECT
     name,
     value
 FROM cookies;"
-} > $XDG_RUNTIME_DIR/cookies.txt
+} > "${2:-$XDG_RUNTIME_DIR/cookies.txt}"
 
 # expires_utc is converted from the Windows NT Time Format to a UNIX timestamp
