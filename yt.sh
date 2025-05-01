@@ -34,6 +34,7 @@ while [ $# -gt 0 ]; do
             ;;
         -v|--verbose)
             ignore_output=false
+            set -x
             ;;
         --quality)
             cmd+=(-f)
@@ -45,6 +46,10 @@ while [ $# -gt 0 ]; do
                     cmd+=("$2")
                     ;;
             esac
+            shift
+            ;;
+        --use-extractors)
+            cmd+=("$1" "$2")
             shift
             ;;
         --*)
