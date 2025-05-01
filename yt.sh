@@ -48,7 +48,7 @@ while [ $# -gt 0 ]; do
             esac
             shift
             ;;
-        --use-extractors)
+        --use-extractors|--output)
             cmd+=("$1" "$2")
             shift
             ;;
