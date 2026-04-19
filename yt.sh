@@ -21,7 +21,7 @@ maybe_add_proxy()
 }
 
 cmd=(yt-dlp --cookies-from-browser chromium:~/.local/share/qutebrowser)
-proxy=(--proxy socks://127.0.0.1:5050)
+proxy=(--proxy socks://127.0.0.1:1080)
 
 ignore_output=true
 while [ $# -gt 0 ]; do
